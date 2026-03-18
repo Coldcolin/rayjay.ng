@@ -1,121 +1,773 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Button } from "@/components/ui/button"
+import {
+  Anchor,
+  ArrowUpRight,
+  BadgeCheck,
+  BookCheck,
+  Boxes,
+  Cable,
+  CheckCircle2,
+  ClipboardCheck,
+  Compass,
+  Factory,
+  Gauge,
+  Globe,
+  Handshake,
+  HardHat,
+  LifeBuoy,
+  Mail,
+  MapPin,
+  Phone,
+  Radar,
+  Ship,
+  ShieldCheck,
+  Shovel,
+  Truck,
+  Users,
+  Wrench,
+  Zap,
+} from "lucide-react"
 
-function App() {
-  const [count, setCount] = useState(0)
+const services = [
+  {
+    title: "Lifting Equipment Inspection",
+    description: "Detailed inspections and certification readiness for lifting assets.",
+    icon: HardHat,
+  },
+  {
+    title: "Earth Moving Equipment Inspection",
+    description: "Condition assessment and compliance checks for heavy equipment.",
+    icon: Shovel,
+  },
+  {
+    title: "Non-Destructive Testing (NDT)",
+    description: "Advanced diagnostics to maintain integrity and safety.",
+    icon: Radar,
+  },
+  {
+    title: "Instrumentation & Calibration",
+    description: "Precision calibration to keep systems accurate and compliant.",
+    icon: Gauge,
+  },
+  {
+    title: "Lifting Operations (LOLER & PUWER)",
+    description: "Safe lifting operations aligned with global best practices.",
+    icon: Cable,
+  },
+  {
+    title: "Marine Logistics & Haulage",
+    description: "Coordinated marine and road logistics for mission-critical cargo.",
+    icon: Ship,
+  },
+  {
+    title: "Equipment Leasing",
+    description: "Flexible leasing to keep projects moving without downtime.",
+    icon: Boxes,
+  },
+  {
+    title: "Manpower Supply",
+    description: "Skilled technical crews sourced and trained for specialized work.",
+    icon: Users,
+  },
+  {
+    title: "Rope Access Services",
+    description: "Safe access solutions for complex and high-risk environments.",
+    icon: LifeBuoy,
+  },
+  {
+    title: "Fabric Maintenance",
+    description: "Repair, retrofit, and maintenance for industrial fabric assets.",
+    icon: Wrench,
+  },
+  {
+    title: "Electrical Installations & Maintenance",
+    description: "Reliable power systems built for demanding operations.",
+    icon: Zap,
+  },
+  {
+    title: "Training, Supplies & Contracts",
+    description: "Training programs, supplies, and contract support end-to-end.",
+    icon: BookCheck,
+  },
+]
 
+const coreValues = [
+  {
+    title: "People First",
+    description:
+      "We place premium on our human capital both skilled and unskilled before and within the job.",
+  },
+  {
+    title: "Continuous Training",
+    description:
+      "We train and re-train our workforce on new technologies and safety procedures.",
+  },
+  {
+    title: "Local Content Commitment",
+    description:
+      "We adhere to local content policies with emphasis on host community development.",
+  },
+  {
+    title: "Modern Infrastructure",
+    description:
+      "We constantly upgrade facilities, infrastructure, and equipment to achieve our goals.",
+  },
+  {
+    title: "Regulatory Alignment",
+    description:
+      "We build harmonious relationships with host communities and comply with global standards.",
+  },
+  {
+    title: "QA/QC Discipline",
+    description:
+      "We focus on quality control, assurance, and innovation to meet customer expectations.",
+  },
+]
+
+const excellence = [
+  {
+    title: "Community Relations / CSR",
+    description:
+      "We maintain MOUs with host communities, provide local employment, and support infrastructure.",
+    icon: Handshake,
+  },
+  {
+    title: "Nigeria Content Development",
+    description:
+      "Our technical crew leads maintenance and repairs locally to prevent downtime.",
+    icon: Globe,
+  },
+  {
+    title: "Proactive Crew",
+    description:
+      "Highly trained teams deliver accurate reporting, risk mitigation, and HSE compliance.",
+    icon: Users,
+  },
+  {
+    title: "Fast Mobilization",
+    description:
+      "Route mapping enables safe, cost-effective mobilization by road, water, or air.",
+    icon: Truck,
+  },
+  {
+    title: "Site Facility Readiness",
+    description:
+      "We provide accommodation, transport, first-aid, and communication support on site.",
+    icon: LifeBuoy,
+  },
+]
+
+const stats = [
+  { label: "Indigenous Strength", value: "100% Local Content" },
+  { label: "CAC Registration", value: "RC 2621639" },
+  { label: "Quality System", value: "ISO 9001:2015 Aligned" },
+  { label: "Regional Reach", value: "West Africa Focus" },
+]
+
+const projects = [
+  {
+    title: "Offshore Lifting Inspection Program",
+    category: "Marine & Oil",
+    image:
+      "/offLift.jpeg",
+  },
+  {
+    title: "Heavy Equipment Fleet Audit",
+    category: "Construction",
+    image:
+      "constructionequipment.webp",
+  },
+  {
+    title: "Instrumentation Calibration Campaign",
+    category: "Oil & Gas",
+    image:
+      "/InstruCal.png",
+  },
+  {
+    title: "Marine Logistics Corridor",
+    category: "Logistics",
+    image:
+      "/MarineLog.png",
+  },
+  {
+    title: "Rope Access Maintenance",
+    category: "Industrial",
+    image:
+      "/RopeStuff.jpg",
+  },
+  {
+    title: "Fabric Maintenance & Refurbishment",
+    category: "Infrastructure",
+    image:
+      "/FabMent.jpeg",
+  },
+]
+
+const process = [
+  {
+    title: "Assess & Plan",
+    description:
+      "We evaluate assets, scope, and risks to build a disciplined execution plan.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Mobilize",
+    description:
+      "Route mapping and logistics ensure safe and fast mobilization to site.",
+    icon: Compass,
+  },
+  {
+    title: "Execute",
+    description:
+      "Specialist crews deliver inspections, maintenance, and operations with precision.",
+    icon: Factory,
+  },
+  {
+    title: "Assure Quality",
+    description:
+      "Audits, feedback, and QA/QC controls keep outcomes aligned with standards.",
+    icon: BadgeCheck,
+  },
+]
+
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="text-ink-950">
+      <header className="relative">
+        <div className="bg-ink-950 text-white">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70">
+            <span>www.rayjay.com.ng</span>
+            <span>Marine • Oil & Gas • Construction • Exploration</span>
+            <span>Accountable. Trustworthy. Indigenous.</span>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
+          <div className="flex items-center gap-3">
+            <div className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
+              <img
+                src="/rayjay.png"
+                alt="Rayjay Multinational Company Limited logo"
+                className="h-full w-full object-contain shadow-soft"
+              />
+            </div>
+            <div>
+              <p className="font-display text-lg uppercase tracking-[0.2em]">Rayjay</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70">
+                Multinational Company Limited
+              </p>
+            </div>
+          </div>
+          <nav className="hidden items-center gap-6 text-sm font-medium text-ink-800 lg:flex">
+            <a href="#about" className="hover:text-sea-500">
+              About
+            </a>
+            <a href="#services" className="hover:text-sea-500">
+              Services
+            </a>
+            <a href="#projects" className="hover:text-sea-500">
+              Projects
+            </a>
+            <a href="#values" className="hover:text-sea-500">
+              Values
+            </a>
+            <a href="#operations" className="hover:text-sea-500">
+              Operations
+            </a>
+            <a href="#quality" className="hover:text-sea-500">
+              Quality
+            </a>
+          </nav>
+          <Button asChild className="bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700">
+            <a href="mailto:info@rayjayng.com?subject=Quotation%20Request">
+              Get a Quote
+              <ArrowUpRight className="ml-2 size-4" />
+            </a>
+          </Button>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
+      <main>
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid opacity-20" />
+          <div className="absolute -right-24 top-24 size-72 rounded-full bg-ember-200/60 blur-3xl" />
+          <div className="absolute -left-20 bottom-10 size-60 rounded-full bg-sea-200/60 blur-3xl" />
+          <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+            <div className="relative z-10 space-y-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-ember-200 bg-ember-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ember-700">
+                <Anchor className="size-4" />
+                West Africa Operations
+              </div>
+              <h1
+                className="text-balance font-display text-4xl font-semibold uppercase tracking-[0.06em] text-ink-950 opacity-0 animate-reveal lg:text-6xl"
+                style={{ animationDelay: "0.05s" }}
+              >
+                Reliable Marine, Oil &amp; Gas, Construction &amp; Exploration
+                Services Built on Accountability.
+              </h1>
+              <p
+                className="max-w-xl text-lg text-ink-800 opacity-0 animate-reveal"
+                style={{ animationDelay: "0.15s" }}
+              >
+                Rayjay Multinational Company Limited was born out of the demand
+                for a quality alternative in specialty service delivery. We are a
+                100% indigenous company facilitating local content while solving
+                demanding challenges across critical sectors.
+              </p>
+              <div
+                className="flex flex-wrap items-center gap-4 opacity-0 animate-reveal"
+                style={{ animationDelay: "0.25s" }}
+              >
+                <Button asChild className="bg-sea-600 text-ember-400 hover:bg-sea-700">
+                  <a href="mailto:info@rayjayng.com?subject=Consultation%20Request">
+                    Request a Consultation
+                    <ArrowUpRight className="ml-2 size-4" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-ink-900/20 text-ink-900 hover:border-ember-400 hover:text-ink-950"
+                >
+                  <a href="#services">View Services</a>
+                </Button>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {stats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-2xl border border-white/50 bg-white/80 p-4 shadow-soft opacity-0 animate-reveal"
+                    style={{ animationDelay: `${0.35 + index * 0.08}s` }}
+                  >
+                    <p className="text-xs uppercase tracking-[0.3em] text-ink-800/60">
+                      {stat.label}
+                    </p>
+                    <p className="mt-2 text-lg font-semibold text-ink-950">
+                      {stat.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-6 right-8 flex items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 text-sm shadow-soft">
+                <ShieldCheck className="size-5 text-ember-600" />
+                ISO 9001:2015 Requirements Aligned
+              </div>
+              <div className="overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-lift animate-floaty">
+                <img
+                  src="/hero.png"
+                  alt="Industrial operations"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="group absolute -bottom-10 left-6 overflow-hidden rounded-2xl border border-white/90 bg-white/95 shadow-lift backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-sea-200/70">
+                <div className="absolute -right-6 -top-6 size-20 rounded-full bg-gradient-to-br from-sea-500/10 to-ember-500/5" />
+                <div className="relative flex items-start gap-4 p-5">
+                  <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sea-500/20 to-sea-600/10 text-sea-600 ring-1 ring-sea-500/15">
+                    <BadgeCheck className="size-7" strokeWidth={2.5} />
+                  </div>
+                  <div className="min-w-0 pt-0.5">
+                    <p className="font-mono text-2xl font-bold tracking-tight text-ink-950">
+                      RC 2621639
+                    </p>
+                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-sea-600">
+                      CAC Verified · Nigeria
+                    </p>
+                    <p className="mt-2.5 text-xs leading-relaxed text-ink-600/70">
+                      Corporate Affairs Commission
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section id="about" className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-6">
+              <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                Introduction
+              </p>
+              <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em] text-ink-950">
+                A trusted partner for complex operations across marine and
+                industrial sectors.
+              </h2>
+              <p className="text-lg text-ink-800">
+                With a multinational perspective, Rayjay Multinational Company
+                Limited delivers accountable, trustworthy service delivery
+                across West Africa. Our teams focus on operational efficiency,
+                proactive planning, and local content development to keep
+                projects on track.
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-ink-800/70">
+                <span className="rounded-full border border-ink-900/10 bg-white px-4 py-2">
+                  Marine
+                </span>
+                <span className="rounded-full border border-ink-900/10 bg-white px-4 py-2">
+                  Oil &amp; Gas
+                </span>
+                <span className="rounded-full border border-ink-900/10 bg-white px-4 py-2">
+                  Construction
+                </span>
+                <span className="rounded-full border border-ink-900/10 bg-white px-4 py-2">
+                  Exploration
+                </span>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="rounded-3xl border border-ember-100 bg-white/90 p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-ember-200/80 hover:shadow-lift">
+                <p className="text-xs uppercase tracking-[0.3em] text-ink-800/60">
+                  Vision
+                </p>
+                <p className="mt-3 text-lg font-semibold text-ink-950">
+                  To be an accomplished standpoint for accountability and
+                  trustworthy service delivery across West Africa.
+                </p>
+              </div>
+              <div className="rounded-3xl border border-sea-100 bg-white/90 p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-sea-200/80 hover:shadow-lift">
+                <p className="text-xs uppercase tracking-[0.3em] text-ink-800/60">
+                  Mission
+                </p>
+                <p className="mt-3 text-lg font-semibold text-ink-950">
+                  Deploy quality, reliable, and effective services leveraging
+                  technology and innovation in conformity with ISO 9001:2015
+                  requirements and best practices.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <section id="services" className="bg-ink-950 py-16 text-white">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                  Services
+                </p>
+                <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
+                  Integrated service solutions for critical assets.
+                </h2>
+              </div>
+              <div className="flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember-200">
+                <span className="inline-flex size-2 rounded-full bg-ember-300" />
+                ISO 9001:2015 Quality Management Aligned
+              </div>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {services.map((service) => {
+                const Icon = service.icon
+                return (
+                  <div
+                    key={service.title}
+                    className="group rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-ember-400/70 hover:bg-white/10"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="flex size-11 items-center justify-center rounded-2xl bg-white/10 text-ember-300 group-hover:bg-ember-400 group-hover:text-ink-950">
+                        <Icon className="size-5" />
+                      </span>
+                      <h3 className="text-lg font-semibold">{service.title}</h3>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-white/70">
+                      {service.description}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" className="mx-auto max-w-6xl px-6 py-16">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                Projects
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-ink-950">
+                Recent operations across marine, construction, and industrial assets.
+              </h2>
+            </div>
+            {/* <Button
+              variant="outline"
+              className="border-ink-900/20 text-ink-900 hover:border-ember-400 hover:text-ink-950"
+            >
+              View All Projects
+            </Button> */}
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {projects.map((project) => (
+              <div
+                key={project.title}
+                className="group overflow-hidden rounded-3xl border border-ink-900/10 bg-white/90 shadow-soft"
+              >
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-ink-950/10 to-transparent" />
+                  <span className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink-900">
+                    {project.category}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-3 p-6">
+                  <h3 className="text-lg font-semibold text-ink-950">
+                    {project.title}
+                  </h3>
+                  <ArrowUpRight className="size-5 text-ember-400" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="values" className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="space-y-6">
+              <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                Core Values
+              </p>
+              <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em] text-ink-950">
+                Values that drive performance, safety, and accountability.
+              </h2>
+              <p className="text-lg text-ink-800">
+                Our values guide how we develop people, maintain compliance, and
+                build long-term relationships in every host community.
+              </p>
+            </div>
+            <div className="grid gap-5">
+              {coreValues.map((value, index) => (
+                <div
+                  key={value.title}
+                  className="group rounded-2xl border border-ink-900/10 bg-white/90 p-5 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-ember-200/80 hover:shadow-lift"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-9 items-center justify-center rounded-full bg-ember-100 text-sm font-semibold text-ember-700 transition group-hover:bg-ember-200 group-hover:text-ember-800">
+                      {index + 1}
+                    </span>
+                    <h3 className="text-lg font-semibold text-ink-950">
+                      {value.title}
+                    </h3>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-800">
+                    {value.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="operations" className="bg-sea-50/60 py-16">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="space-y-6">
+                <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                  Operational Excellence
+                </p>
+                <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em] text-ink-950">
+                  Proactive crew, fast mobilization, and local technical
+                  strength.
+                </h2>
+                <p className="text-lg text-ink-800">
+                  Rayjay Multinational emphasizes a single source of
+                  responsibility from project conception to completion. Our
+                  project coordinators and local technical teams ensure minimal
+                  downtime, accurate reporting, and responsive decision-making.
+                </p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {process.map((step) => {
+                    const Icon = step.icon
+                    return (
+                      <div
+                        key={step.title}
+                        className="group rounded-2xl border border-ink-900/10 bg-white/90 p-4 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-ember-200/80 hover:shadow-lift"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="flex size-9 items-center justify-center rounded-xl bg-ember-100 text-ember-700 transition group-hover:bg-ember-200 group-hover:text-ember-800">
+                            <Icon className="size-4" />
+                          </span>
+                          <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-ink-800">
+                            {step.title}
+                          </h3>
+                        </div>
+                        <p className="mt-3 text-sm text-ink-800/80">
+                          {step.description}
+                        </p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              <div className="space-y-5">
+                {excellence.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <div
+                      key={item.title}
+                      className="group rounded-3xl border border-white/70 bg-white/90 p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-sea-200/80 hover:shadow-lift"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="flex size-10 items-center justify-center rounded-2xl bg-sea-100 text-sea-700 transition group-hover:bg-sea-200 group-hover:text-sea-800">
+                          <Icon className="size-5" />
+                        </span>
+                        <h3 className="text-lg font-semibold text-ink-950">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="mt-3 text-sm leading-relaxed text-ink-800/80">
+                        {item.description}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="quality" className="bg-ink-950 py-16 text-white">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="space-y-6">
+                <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                  Quality &amp; Safety
+                </p>
+                <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em] text-white">
+                  Quality management aligned with ISO 9001:2015 requirements.
+                </h2>
+                <p className="text-lg text-white/70">
+                  We operate a disciplined Quality Management System focused on
+                  internal audits, management reviews, and continuous
+                  improvement. Our policy emphasizes leadership responsibility,
+                  employee involvement, and cooperation with regulatory bodies.
+                </p>
+                <div className="grid gap-3 text-sm text-white/70">
+                  {[
+                    "Scheduled internal audits and periodic management reviews",
+                    "Independent external audits by certifying authorities and customers",
+                    "Regular review of quality objectives and customer feedback",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-1 size-4 text-ember-300" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-6">
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="size-6 text-ember-300" />
+                  <h3 className="text-xl font-semibold">Workplace Violence Policy</h3>
+                </div>
+                <p className="text-sm leading-relaxed text-white/70">
+                  Rayjay Multinational Company Limited is committed to a work
+                  environment free from violence. We investigate concerns
+                  promptly, prohibit weapons on company property, and safeguard
+                  employees who report incidents.
+                </p>
+                <div className="space-y-3 text-sm text-white/70">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 size-4 text-ember-300" />
+                    <span>Immediate response to Q/HSE reports and risk mitigations</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-1 size-4 text-ember-300" />
+                    <span>Clear accountability and single point of responsibility</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid gap-8 rounded-[32px] border border-sea-200 bg-sea-600 p-10 text-white shadow-lift lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.4em] text-white/70">
+                Let’s Work Together
+              </p>
+              <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em]">
+                Ready to mobilize your next project?
+              </h2>
+              <p className="text-lg text-white/80">
+                Partner with Rayjay Multinational Company Limited for reliable
+                inspections, logistics, and technical services across West
+                Africa.
+              </p>
+            </div>
+            <div className="flex flex-col justify-between gap-6">
+              <div className="rounded-2xl bg-white/15 p-5">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+                  Contact
+                </p>
+                <div className="mt-4 space-y-4 text-sm text-white/80">
+                  <div className="flex items-start gap-3">
+                    <Phone className="mt-0.5 size-4 text-ember-200" />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                        Number
+                      </p>
+                      <a
+                        href="tel:+2348151201017"
+                        className="text-base font-semibold text-white hover:text-white/90"
+                      >
+                        +234 815 120 1017
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Mail className="mt-0.5 size-4 text-ember-200" />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                        Email
+                      </p>
+                      <a
+                        href="mailto:info@rayjayng.com"
+                        className="text-base font-semibold text-white hover:text-white/90"
+                      >
+                        info@rayjayng.com
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <MapPin className="mt-0.5 size-4 text-ember-200" />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                        Address
+                      </p>
+                      <p className="text-sm text-white/80">
+                        No 2 Shell Location Road, Agbada 2 Flow Station, opposite
+                        Bolingo, Igwuruta.
+                        <span className="block text-white/70">Port Harcourt.</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Button asChild className="bg-white text-sea-700 hover:bg-white/90">
+                <a href="tel:+2348151201017">
+                  Schedule a Call
+                  <ArrowUpRight className="ml-2 size-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-ink-900/10 bg-white/70 py-8">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 text-sm text-ink-800/70">
+          <div className="flex items-center gap-2">
+            <Anchor className="size-4 text-ember-400" />
+            <span>Rayjay Multinational Company Limited</span>
+          </div>
+          <span>CAC RC 2621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
+        </div>
+      </footer>
+    </div>
   )
 }
-
-export default App

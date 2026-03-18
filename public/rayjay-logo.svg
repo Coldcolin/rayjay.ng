@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Rayjay Multinational Company Limited">
+  <defs>
+    <linearGradient id="blueShield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d5bff" />
+      <stop offset="100%" stop-color="#1a37b8" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M60 8 L102 24 V62 C102 90 80 108 60 112 C40 108 18 90 18 62 V24 Z"
+    fill="url(#blueShield)"
+  />
+  <path d="M28 40 L52 24 V96 L28 82 Z" fill="#f5b800" />
+  <path d="M62 28 H92 V48 H62 Z" fill="#ffffff" opacity="0.95" />
+  <text x="67" y="44" font-family="Manrope, sans-serif" font-weight="700" font-size="16" fill="#1a37b8">
+    RMC
+  </text>
+  <text x="36" y="92" font-family="Manrope, sans-serif" font-weight="600" font-size="9" fill="#ffffff">
+    Rayjay
+  </text>
+</svg>
