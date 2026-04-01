@@ -1,95 +1,26 @@
 import { Button } from "@/components/ui/button"
+import { services, type Service } from "@/data/services"
 import {
   Anchor,
+  ArrowLeft,
   ArrowUpRight,
   BadgeCheck,
   BookCheck,
-  Boxes,
-  Cable,
   CheckCircle2,
   ClipboardCheck,
   Compass,
   Factory,
-  Gauge,
   Globe,
   Handshake,
-  HardHat,
   LifeBuoy,
   Mail,
   MapPin,
   Phone,
-  Radar,
-  Ship,
   ShieldCheck,
-  Shovel,
   Truck,
   Users,
-  Wrench,
-  Zap,
 } from "lucide-react"
-
-const services = [
-  {
-    title: "Lifting Equipment Inspection",
-    description: "Detailed inspections and certification readiness for lifting assets.",
-    icon: HardHat,
-  },
-  {
-    title: "Earth Moving Equipment Inspection",
-    description: "Condition assessment and compliance checks for heavy equipment.",
-    icon: Shovel,
-  },
-  {
-    title: "Non-Destructive Testing (NDT)",
-    description: "Advanced diagnostics to maintain integrity and safety.",
-    icon: Radar,
-  },
-  {
-    title: "Instrumentation & Calibration",
-    description: "Precision calibration to keep systems accurate and compliant.",
-    icon: Gauge,
-  },
-  {
-    title: "Lifting Operations (LOLER & PUWER)",
-    description: "Safe lifting operations aligned with global best practices.",
-    icon: Cable,
-  },
-  {
-    title: "Marine Logistics & Haulage",
-    description: "Coordinated marine and road logistics for mission-critical cargo.",
-    icon: Ship,
-  },
-  {
-    title: "Equipment Leasing",
-    description: "Flexible leasing to keep projects moving without downtime.",
-    icon: Boxes,
-  },
-  {
-    title: "Manpower Supply",
-    description: "Skilled technical crews sourced and trained for specialized work.",
-    icon: Users,
-  },
-  {
-    title: "Rope Access Services",
-    description: "Safe access solutions for complex and high-risk environments.",
-    icon: LifeBuoy,
-  },
-  {
-    title: "Fabric Maintenance",
-    description: "Repair, retrofit, and maintenance for industrial fabric assets.",
-    icon: Wrench,
-  },
-  {
-    title: "Electrical Installations & Maintenance",
-    description: "Reliable power systems built for demanding operations.",
-    icon: Zap,
-  },
-  {
-    title: "Training, Supplies & Contracts",
-    description: "Training programs, supplies, and contract support end-to-end.",
-    icon: BookCheck,
-  },
-]
+import { useEffect, useMemo, useState } from "react"
 
 const coreValues = [
   {
@@ -175,7 +106,7 @@ const projects = [
     title: "Heavy Equipment Fleet Audit",
     category: "Construction",
     image:
-      "constructionequipment.webp",
+      "/constructionequipment.webp",
   },
   {
     title: "Instrumentation Calibration Campaign",
@@ -230,61 +161,522 @@ const process = [
   },
 ]
 
-export default function App() {
+const navLinks = [
+  { id: "about", label: "About" },
+  { id: "services", label: "Services" },
+  { id: "projects", label: "Projects" },
+  { id: "values", label: "Values" },
+  { id: "operations", label: "Operations" },
+  { id: "quality", label: "Quality" },
+]
+
+type NavigateFn = (path: string, sectionId?: string) => void
+
+const getServiceSlug = (pathname: string) => {
+  const marker = "/services"
+  const index = pathname.indexOf(marker)
+  if (index === -1) {
+    return null
+  }
+  const slug = pathname
+    .slice(index + marker.length)
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "")
+  return slug.length > 0 ? slug : null
+}
+
+function SiteHeader({
+  isDetail = false,
+  onNavigate,
+}: {
+  isDetail?: boolean
+  onNavigate?: NavigateFn
+}) {
   return (
-    <div className="text-ink-950">
-      <header className="relative">
-        <div className="bg-ink-950 text-white">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70">
-            <span>www.rayjay.com.ng</span>
-            <span>Marine • Oil & Gas • Construction • Exploration</span>
-            <span>Accountable. Trustworthy. Indigenous.</span>
+    <header className="relative">
+      <div className="bg-ink-950 text-white">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70">
+          <span>www.rayjay.com.ng</span>
+          <span>Marine • Oil & Gas • Construction • Exploration</span>
+          <span>Accountable. Trustworthy. Indigenous.</span>
+        </div>
+      </div>
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
+        <div className="flex items-center gap-3">
+          <div className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
+            <img
+              src="/rayjay.png"
+              alt="Rayjay Multinational Company Limited logo"
+              className="h-full w-full object-contain shadow-soft"
+            />
+          </div>
+          <div>
+            <p className="font-display text-lg uppercase tracking-[0.2em]">Rayjay</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70">
+              Multinational Company Limited
+            </p>
           </div>
         </div>
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
-          <div className="flex items-center gap-3">
-            <div className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
-              <img
-                src="/rayjay.png"
-                alt="Rayjay Multinational Company Limited logo"
-                className="h-full w-full object-contain shadow-soft"
-              />
-            </div>
-            <div>
-              <p className="font-display text-lg uppercase tracking-[0.2em]">Rayjay</p>
-              <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70">
-                Multinational Company Limited
-              </p>
+        <nav className="hidden items-center gap-6 text-sm font-medium text-ink-800 lg:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.id}
+              href={isDetail ? `/#${link.id}` : `#${link.id}`}
+              onClick={(event) => {
+                if (!isDetail || !onNavigate) {
+                  return
+                }
+                event.preventDefault()
+                onNavigate("/", link.id)
+              }}
+              className="hover:text-sea-500"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <Button asChild className="bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700">
+          <a href="mailto:info@rayjayng.com?subject=Quotation%20Request">
+            Get a Quote
+            <ArrowUpRight className="ml-2 size-4" />
+          </a>
+        </Button>
+      </div>
+    </header>
+  )
+}
+
+function ServiceCard({
+  service,
+  onNavigate,
+}: {
+  service: Service
+  onNavigate: NavigateFn
+}) {
+  const Icon = service.icon
+
+  return (
+    <a
+      href={`/services/${service.slug}`}
+      onClick={(event) => {
+        event.preventDefault()
+        onNavigate(`/services/${service.slug}`)
+      }}
+      className="group relative flex h-full min-h-[240px] flex-col rounded-3xl border border-white/10 bg-white/5 p-6 text-left transition hover:-translate-y-1 hover:border-ember-400/70 hover:bg-white/10"
+      aria-label={`View ${service.title} details`}
+    >
+      <div className="flex items-center gap-3">
+        <span className="flex size-11 items-center justify-center rounded-2xl bg-white/10 text-ember-300 group-hover:bg-ember-400 group-hover:text-ink-950">
+          <Icon className="size-5" />
+        </span>
+        <h3 className="text-lg font-semibold">{service.title}</h3>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/60">
+        {service.syllabus ? (
+          <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1">
+            {service.syllabus}
+          </span>
+        ) : null}
+        <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1">
+          {service.duration}
+        </span>
+      </div>
+      <p className="mt-4 min-h-[72px] max-h-[96px] translate-y-2 overflow-hidden text-sm leading-relaxed text-white/70 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        {service.summary}
+      </p>
+      <div className="mt-auto flex items-center justify-between pt-4 text-xs uppercase tracking-[0.3em] text-white/60">
+        <span>View Details</span>
+        <ArrowUpRight className="size-4 text-ember-300" />
+      </div>
+    </a>
+  )
+}
+
+function ContactSection() {
+  return (
+    <section id="contact" className="mx-auto max-w-6xl px-6 py-16">
+      <div className="grid gap-8 rounded-[32px] border border-sea-200 bg-sea-600 p-10 text-white shadow-lift lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="space-y-4">
+          <p className="text-xs uppercase tracking-[0.4em] text-white/70">
+            Let’s Work Together
+          </p>
+          <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em]">
+            Ready to mobilize your next project?
+          </h2>
+          <p className="text-lg text-white/80">
+            Partner with Rayjay Multinational Company Limited for reliable
+            inspections, logistics, and technical services across West Africa.
+          </p>
+        </div>
+        <div className="flex flex-col justify-between gap-6">
+          <div className="rounded-2xl bg-white/15 p-5">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+              Contact
+            </p>
+            <div className="mt-4 space-y-4 text-sm text-white/80">
+              <div className="flex items-start gap-3">
+                <Phone className="mt-0.5 size-4 text-ember-200" />
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                    Number
+                  </p>
+                  <a
+                    href="tel:+2348151201017"
+                    className="text-base font-semibold text-white hover:text-white/90"
+                  >
+                    +234 815 120 1017
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Mail className="mt-0.5 size-4 text-ember-200" />
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                    Email
+                  </p>
+                  <a
+                    href="mailto:info@rayjayng.com"
+                    className="text-base font-semibold text-white hover:text-white/90"
+                  >
+                    info@rayjayng.com
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-0.5 size-4 text-ember-200" />
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                    Address
+                  </p>
+                  <p className="text-sm text-white/80">
+                    No 2 Shell Location Road, Agbada 2 Flow Station, opposite
+                    Bolingo, Igwuruta.
+                    <span className="block text-white/70">Port Harcourt.</span>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          <nav className="hidden items-center gap-6 text-sm font-medium text-ink-800 lg:flex">
-            <a href="#about" className="hover:text-sea-500">
-              About
-            </a>
-            <a href="#services" className="hover:text-sea-500">
-              Services
-            </a>
-            <a href="#projects" className="hover:text-sea-500">
-              Projects
-            </a>
-            <a href="#values" className="hover:text-sea-500">
-              Values
-            </a>
-            <a href="#operations" className="hover:text-sea-500">
-              Operations
-            </a>
-            <a href="#quality" className="hover:text-sea-500">
-              Quality
-            </a>
-          </nav>
-          <Button asChild className="bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700">
-            <a href="mailto:info@rayjayng.com?subject=Quotation%20Request">
-              Get a Quote
+          <Button asChild className="bg-white text-sea-700 hover:bg-white/90">
+            <a href="tel:+2348151201017">
+              Schedule a Call
               <ArrowUpRight className="ml-2 size-4" />
             </a>
           </Button>
         </div>
-      </header>
+      </div>
+    </section>
+  )
+}
+
+function SiteFooter() {
+  return (
+    <footer className="border-t border-ink-900/10 bg-white/70 py-8">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 text-sm text-ink-800/70">
+        <div className="flex items-center gap-2">
+          <Anchor className="size-4 text-ember-400" />
+          <span>Rayjay Multinational Company Limited</span>
+        </div>
+        <span>CAC RC 2621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
+      </div>
+    </footer>
+  )
+}
+
+function ServiceDetailPage({
+  service,
+  allServices,
+  onNavigate,
+}: {
+  service?: Service
+  allServices: Service[]
+  onNavigate: NavigateFn
+}) {
+  const [heroSrc, setHeroSrc] = useState(service?.heroImage.src ?? "")
+
+  useEffect(() => {
+    if (service) {
+      setHeroSrc(service.heroImage.src)
+    }
+  }, [service])
+
+  const heroFallback = service
+    ? `https://placehold.co/1600x900?text=${encodeURIComponent(service.title)}`
+    : ""
+
+  if (!service) {
+    return (
+      <div className="text-ink-950">
+        <SiteHeader isDetail onNavigate={onNavigate} />
+        <main className="mx-auto max-w-6xl px-6 py-16">
+          <div className="rounded-3xl border border-ink-900/10 bg-white/90 p-10 text-center shadow-soft">
+            <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+              Service
+            </p>
+            <h1 className="mt-4 text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em] text-ink-950">
+              Service Not Found
+            </h1>
+            <p className="mx-auto mt-3 max-w-2xl text-lg text-ink-800">
+              We couldn’t locate that training service. Browse the catalog below
+              or return to the main services list.
+            </p>
+            <Button
+              onClick={() => onNavigate("/", "services")}
+              className="mt-6 bg-sea-600 text-ember-200 hover:bg-sea-700"
+            >
+              Back to Services
+              <ArrowUpRight className="ml-2 size-4" />
+            </Button>
+          </div>
+          <div className="mt-10 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {allServices.map((item) => (
+              <ServiceCard
+                key={item.slug}
+                service={item}
+                onNavigate={onNavigate}
+              />
+            ))}
+          </div>
+        </main>
+        <ContactSection />
+        <SiteFooter />
+      </div>
+    )
+  }
+
+  const otherServices = allServices
+    .filter((item) => item.slug !== service.slug)
+    .slice(0, 6)
+
+  return (
+    <div className="text-ink-950">
+      <SiteHeader isDetail onNavigate={onNavigate} />
+      <main>
+        <section className="relative">
+          <div className="h-[320px] w-full md:h-[420px]">
+            <img
+              src={heroSrc}
+              alt={service.heroImage.alt}
+              className="h-full w-full object-cover"
+              onError={() => {
+                if (heroSrc !== heroFallback) {
+                  setHeroSrc(heroFallback)
+                }
+              }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-ink-950/90 via-ink-950/60 to-transparent" />
+          <div className="absolute inset-0">
+            <div className="mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-10">
+              <Button
+                variant="outline"
+                onClick={() => onNavigate("/", "services")}
+                className="mb-6 w-fit border-white/30 text-black hover:border-white/60 hover:bg-white/10"
+              >
+                <ArrowLeft className="mr-2 size-4 text-black" />
+                Back to Services
+              </Button>
+              <div className="max-w-2xl space-y-4 text-white">
+                <div className="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70">
+                  {service.syllabus ? (
+                    <span className="rounded-full border border-ember-300/40 bg-ember-300/10 px-3 py-1 text-ember-100">
+                      {service.syllabus}
+                    </span>
+                  ) : null}
+                  <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1">
+                    Training Program
+                  </span>
+                </div>
+                <h1 className="text-balance font-display text-4xl font-semibold uppercase tracking-[0.06em] text-white md:text-5xl">
+                  {service.title}
+                </h1>
+                <p className="text-lg text-white/80">{service.summary}</p>
+                <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.3em] text-white/70">
+                  <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1">
+                    Duration: {service.duration}
+                  </span>
+                  <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1">
+                    Entry: {service.entryRequirements}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-6 pb-16 pt-10">
+          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="rounded-3xl border border-white/70 bg-white/95 p-8 shadow-lift">
+              <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                Course Description
+              </p>
+              <p className="mt-4 text-lg text-ink-900">{service.description}</p>
+              <div className="mt-8">
+                <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                  Course Content
+                </p>
+                <div className="mt-4 grid gap-3 text-sm text-ink-800">
+                  {service.courseContent.map((item) => (
+                    <div key={item} className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 size-4 text-ember-500" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <div className="rounded-3xl border border-ink-900/10 bg-white/95 p-6 shadow-soft">
+                <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                  Program Details
+                </p>
+                <div className="mt-4 space-y-4 text-sm text-ink-800">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-ink-800/60">
+                      Duration
+                    </p>
+                    <p className="mt-1 text-base font-semibold text-ink-950">
+                      {service.duration}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-ink-800/60">
+                      Entry Requirements
+                    </p>
+                    <p className="mt-1 text-base font-semibold text-ink-950">
+                      {service.entryRequirements}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-3xl border border-sea-200 bg-sea-600 p-6 text-white shadow-soft">
+                <div className="flex items-center gap-3">
+                  <BookCheck className="size-5 text-ember-200" />
+                  <h3 className="text-lg font-semibold">Assessment Method</h3>
+                </div>
+                <p className="mt-3 text-sm text-white/80">
+                  {service.assessmentMethod}
+                </p>
+              </div>
+              {service.notes?.length ? (
+                <div className="rounded-3xl border border-ember-200 bg-ember-50 p-6 shadow-soft">
+                  <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
+                    Delivery Notes
+                  </p>
+                  <div className="mt-3 grid gap-2 text-sm text-ink-800">
+                    {service.notes.map((note) => (
+                      <div key={note} className="flex items-start gap-2">
+                        <CheckCircle2 className="mt-0.5 size-4 text-ember-500" />
+                        <span>{note}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              <Button
+                asChild
+                className="bg-sea-600 text-ember-200 shadow-soft hover:bg-sea-700"
+              >
+                <a
+                  href={`mailto:info@rayjayng.com?subject=${encodeURIComponent(
+                    `${service.title} Training Request`
+                  )}`}
+                >
+                  Request Training
+                  <ArrowUpRight className="ml-2 size-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {otherServices.length > 0 ? (
+          <section className="bg-ink-950 py-16 text-white">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                    Explore More
+                  </p>
+                  <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
+                    More Training Services
+                  </h2>
+                </div>
+                <Button
+                  onClick={() => onNavigate("/", "services")}
+                  className="bg-ember-400 text-ink-950 hover:bg-ember-300"
+                >
+                  View All Services
+                  <ArrowUpRight className="ml-2 size-4" />
+                </Button>
+              </div>
+              <div className="mt-10 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {otherServices.map((item) => (
+                  <ServiceCard
+                    key={item.slug}
+                    service={item}
+                    onNavigate={onNavigate}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        <ContactSection />
+      </main>
+      <SiteFooter />
+    </div>
+  )
+}
+
+export default function App() {
+  const [path, setPath] = useState(() => window.location.pathname)
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setPath(window.location.pathname)
+    }
+    window.addEventListener("popstate", handlePopState)
+    return () => window.removeEventListener("popstate", handlePopState)
+  }, [])
+
+  const navigate: NavigateFn = (to, sectionId) => {
+    window.history.pushState({}, "", to)
+    setPath(to)
+    if (sectionId) {
+      setTimeout(() => {
+        const target = document.getElementById(sectionId)
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" })
+        }
+      }, 80)
+      return
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const serviceSlug = useMemo(() => getServiceSlug(path), [path])
+  const activeService = useMemo(() => {
+    if (!serviceSlug) {
+      return undefined
+    }
+    return services.find((service) => service.slug === serviceSlug)
+  }, [serviceSlug, services])
+
+  if (serviceSlug) {
+    return (
+      <ServiceDetailPage
+        service={activeService}
+        allServices={services}
+        onNavigate={navigate}
+      />
+    )
+  }
+
+  return (
+    <div className="text-ink-950">
+      <SiteHeader onNavigate={navigate} />
 
       <main>
         <section className="relative overflow-hidden">
@@ -447,34 +839,22 @@ export default function App() {
                   Services
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
-                  Integrated service solutions for critical assets.
+                  LEEA-aligned lifting and safety training programs.
                 </h2>
               </div>
               <div className="flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember-200">
                 <span className="inline-flex size-2 rounded-full bg-ember-300" />
-                ISO 9001:2015 Quality Management Aligned
+                Industry-ready training delivery
               </div>
             </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {services.map((service) => {
-                const Icon = service.icon
-                return (
-                  <div
-                    key={service.title}
-                    className="group rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-ember-400/70 hover:bg-white/10"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="flex size-11 items-center justify-center rounded-2xl bg-white/10 text-ember-300 group-hover:bg-ember-400 group-hover:text-ink-950">
-                        <Icon className="size-5" />
-                      </span>
-                      <h3 className="text-lg font-semibold">{service.title}</h3>
-                    </div>
-                    <p className="mt-4 text-sm leading-relaxed text-white/70">
-                      {service.description}
-                    </p>
-                  </div>
-                )
-              })}
+            <div className="mt-10 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {services.map((service) => (
+                <ServiceCard
+                  key={service.slug}
+                  service={service}
+                  onNavigate={navigate}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -684,90 +1064,10 @@ export default function App() {
           </div>
         </section>
 
-        <section id="contact" className="mx-auto max-w-6xl px-6 py-16">
-          <div className="grid gap-8 rounded-[32px] border border-sea-200 bg-sea-600 p-10 text-white shadow-lift lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.4em] text-white/70">
-                Let’s Work Together
-              </p>
-              <h2 className="text-balance font-display text-3xl font-semibold uppercase tracking-[0.08em]">
-                Ready to mobilize your next project?
-              </h2>
-              <p className="text-lg text-white/80">
-                Partner with Rayjay Multinational Company Limited for reliable
-                inspections, logistics, and technical services across West
-                Africa.
-              </p>
-            </div>
-            <div className="flex flex-col justify-between gap-6">
-              <div className="rounded-2xl bg-white/15 p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/60">
-                  Contact
-                </p>
-                <div className="mt-4 space-y-4 text-sm text-white/80">
-                  <div className="flex items-start gap-3">
-                    <Phone className="mt-0.5 size-4 text-ember-200" />
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-                        Number
-                      </p>
-                      <a
-                        href="tel:+2348151201017"
-                        className="text-base font-semibold text-white hover:text-white/90"
-                      >
-                        +234 815 120 1017
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Mail className="mt-0.5 size-4 text-ember-200" />
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-                        Email
-                      </p>
-                      <a
-                        href="mailto:info@rayjayng.com"
-                        className="text-base font-semibold text-white hover:text-white/90"
-                      >
-                        info@rayjayng.com
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 size-4 text-ember-200" />
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-                        Address
-                      </p>
-                      <p className="text-sm text-white/80">
-                        No 2 Shell Location Road, Agbada 2 Flow Station, opposite
-                        Bolingo, Igwuruta.
-                        <span className="block text-white/70">Port Harcourt.</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <Button asChild className="bg-white text-sea-700 hover:bg-white/90">
-                <a href="tel:+2348151201017">
-                  Schedule a Call
-                  <ArrowUpRight className="ml-2 size-4" />
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <ContactSection />
       </main>
 
-      <footer className="border-t border-ink-900/10 bg-white/70 py-8">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 text-sm text-ink-800/70">
-          <div className="flex items-center gap-2">
-            <Anchor className="size-4 text-ember-400" />
-            <span>Rayjay Multinational Company Limited</span>
-          </div>
-          <span>CAC RC 2621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
