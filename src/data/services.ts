@@ -42,19 +42,21 @@ export const services: Service[] = [
     title: "Rigging & Lifting",
     slug: "rigging-lifting",
     summary:
-      "Introductory training for personnel with little or no experience in rigging and lifting operations.",
+      "Essential skills to safely move heavy loads, reducing risks of accidents and equipment damage.",
     description:
-      "Introductory training for personnel with little or no experience in rigging and lifting operations. Focuses on mechanical lifting equipment such as chain blocks, lever hoists, tirfors, shackles, slings, and wire ropes.",
+      "Equips personnel with essential skills to safely move heavy loads, reducing risks of accidents and equipment damage across construction, oil & gas, and manufacturing environments.",
     duration: "2 days",
-    entryRequirements: "None",
+    entryRequirements:
+      "Personnel working in construction, oil & gas, and manufacturing industries.",
     courseContent: [
-      "Rigging principles",
-      "Hazards and risks",
-      "Legislation awareness",
-      "Practice of rigging operations",
+      "Equipment inspection",
+      "Load weight calculation",
+      "Sling selection",
+      "Proper signaling",
     ],
     assessmentMethod: "Written exam and practical observation.",
     syllabus: "LEEA Syllabus",
+    notes: ["Theory sessions supported by hands-on rigging and lifting practice."],
     heroImage: {
       src: "https://www.altrad.com/files/medias/services/4-Mechanical/Lifting%20and%20rigging.jpg",
       alt: "Rigging equipment and lifting slings",
@@ -62,24 +64,51 @@ export const services: Service[] = [
     icon: HardHat,
   },
   {
-    title: "Electric Overhead Travelling Crane",
+    title: "Crane Operator Training",
+    slug: "crane-operator-training",
+    summary:
+      "Program to ensure safe and efficient operation of heavy lifting machinery across construction, shipping, manufacturing, and oil & gas sectors.",
+    description:
+      "This program ensures safe and efficient operation of heavy lifting machinery across construction, shipping, manufacturing, and oil & gas sectors.",
+    duration: "Custom schedule",
+    entryRequirements:
+      "Personnel responsible for operating cranes in industrial environments.",
+    courseContent: [
+      "Crane mechanics and load calculations",
+      "Load chart interpretation",
+      "Rigging principles",
+      "Safety regulations and compliance",
+    ],
+    assessmentMethod: "Assessment method tailored to client requirements.",
+    notes: [
+      "Classroom instruction covering crane systems and safety standards.",
+      "Hands-on training with supervised crane operation, precision lifting, and manoeuvring in varied site conditions.",
+    ],
+    heroImage: {
+      src: "/HeavyLifting.png",
+      alt: "Crane lifting heavy equipment on site",
+    },
+    icon: Truck,
+  },
+  {
+    title: "Overhead Crane Operator Training",
     slug: "electric-overhead-travelling-crane",
     summary:
-      "Training for personnel required to operate overhead cranes, delivered on client sites.",
+      "Knowledge and skills to safely operate bridge, gantry, and monorail cranes with a focus on compliance, inspections, and load handling.",
     description:
-      "Training for personnel required to operate overhead cranes. Delivered only on client sites.",
+      "Provides knowledge and skills to safely operate bridge, gantry, and monorail cranes with a focus on compliance, inspections, and load handling.",
     duration: "2–3 days",
-    entryRequirements: "None",
+    entryRequirements:
+      "Personnel operating overhead cranes in construction, manufacturing, or shipping.",
     courseContent: [
-      "Legislation",
-      "Force influences",
-      "Load estimation",
-      "Center of gravity",
-      "Sling configurations",
+      "Rigging techniques and hand signals",
+      "Hazard awareness",
+      "Pre-use inspections",
+      "Safe lifting operations",
     ],
     assessmentMethod: "Written exam and practical observation.",
     syllabus: "LEEA Syllabus",
-    notes: ["Delivered only on client sites."],
+    notes: ["Classroom theory combined with practical evaluations."],
     heroImage: {
       src: "https://s.alicdn.com/@sc04/kf/Hc3e82c0921f140f49cd9285913d2f834S/Industrial-Warehouse-Electric-Double-Girder-Overhead-Hoist-European-Bridge-Crane-Traveling-Foundry-Casting-Overhead-Crane.jpg",
       alt: "Overhead crane in an industrial facility",
@@ -90,18 +119,21 @@ export const services: Service[] = [
     title: "Banksman / Slinging Training Course",
     slug: "banksman-slinging-training",
     summary:
-      "Hands-on knowledge for Slingers, Signallers, and Riggers working with crane lifting operations.",
+      "Prepares personnel to safely secure loads and direct crane movements in construction and oil & gas environments.",
     description:
-      "Course for personnel working as Slingers/Signallers or Riggers. Provides hands-on knowledge of lifting operations involving cranes.",
+      "Prepares personnel to safely secure loads (slinger) and direct crane movements (banksman) in industries such as construction and oil & gas.",
     duration: "3 days",
-    entryRequirements: "None",
+    entryRequirements:
+      "Individuals working as slingers or banksmen in lifting operations.",
     courseContent: [
-      "Duties of a Slinger/Banksman",
-      "Safe lifting operations",
-      "Accident prevention",
+      "Lifting regulations (LOLER)",
+      "Rigging techniques",
+      "Hand signals and radio communication",
+      "Safe load handling",
     ],
     assessmentMethod: "Written exam (closed book) and practical observation.",
     syllabus: "LEEA Syllabus",
+    notes: ["Classroom instruction and supervised practical exercises."],
     heroImage: {
       src: "https://clydetrainingsolutions.com/wp-content/uploads/2024/02/OPITO-Banksman-Slinger.webp",
       alt: "Signaler guiding a crane lift",
@@ -135,21 +167,22 @@ export const services: Service[] = [
     icon: ShieldCheck,
   },
   {
-    title: "Rigging Loft Management & Equipment Inspection",
+    title: "Rigging Loft Management Training",
     slug: "rigging-loft-management-equipment-inspection",
     summary:
-      "Training for Rigging Loft Controllers on loft setup, management, and equipment organization.",
+      "Prepares personnel to control, inspect, and maintain lifting equipment such as slings, shackles, and hoists in offshore or construction environments.",
     description:
-      "Designed for individuals managing rigging lofts as Rigging Loft Controllers.",
+      "Prepares personnel to control, inspect, and maintain lifting equipment such as slings, shackles, and hoists in offshore or construction environments.",
     duration: "1 day (8 hours)",
-    entryRequirements: "None",
+    entryRequirements: "Personnel responsible for managing rigging lofts.",
     courseContent: [
-      "Loft setup",
-      "Management skills",
-      "Equipment organization",
+      "Loft organization and equipment control",
+      "Inspection procedures",
+      "Maintenance practices",
     ],
     assessmentMethod: "Written test and practical observation.",
     syllabus: "LEEA Syllabus",
+    notes: ["Classroom instruction and practical loft management exercises."],
     heroImage: {
       src: "https://primeliftsafetyng.com/wp-content/uploads/2020/09/Rigging-Loft-Management-Training.jpg",
       alt: "Rigging equipment organized in a workshop",
@@ -291,16 +324,26 @@ export const services: Service[] = [
     icon: Radar,
   },
   {
-    title: "Forklift Training",
+    title: "Forklift Operator Training",
     slug: "forklift-training",
     summary:
-      "Introductory forklift training covering theory, practical skills, and final assessment.",
+      "Mandatory safety training for personnel operating powered industrial trucks to prevent accidents such as tipovers and collisions.",
     description:
-      "Introductory forklift training for personnel with no prior experience. Covers theory, practical skills, and final assessment.",
+      "Mandatory safety training for personnel operating powered industrial trucks, designed to prevent accidents such as tipovers and collisions in construction and oil & gas environments.",
     duration: "2–3 days",
-    entryRequirements: "None",
-    courseContent: ["Forklift operation", "Safety procedures", "Load handling"],
+    entryRequirements:
+      "Employees required to operate forklifts in industrial settings.",
+    courseContent: [
+      "Forklift mechanics and load handling",
+      "Load chart interpretation",
+      "Rigging principles",
+      "Safety regulations",
+    ],
     assessmentMethod: "Written and practical assessment.",
+    notes: [
+      "Classroom instruction covering forklift systems and safety standards.",
+      "Hands-on training with supervised forklift operation, precision lifting, and maneuvering in site conditions.",
+    ],
     heroImage: {
       src: "https://allpurposeforklifttraining.com/images/forklift-dock-loader.jpg",
       alt: "Forklift operating in a warehouse",
@@ -348,24 +391,49 @@ export const services: Service[] = [
     icon: Compass,
   },
   {
+    title: "Scaffold Erection and Inspection Training",
+    slug: "scaffold-erection-inspection-training",
+    summary:
+      "Covers scaffold safety requirements, components, erection, use, and dismantling of supported and suspended scaffolds.",
+    description:
+      "Covers scaffold safety requirements, components, erection, use, and dismantling of supported and suspended scaffolds.",
+    duration: "Custom schedule",
+    entryRequirements:
+      "Personnel involved in scaffold erection, use, and inspection.",
+    courseContent: [
+      "Safe erection and dismantling procedures",
+      "Scaffold use guidelines",
+      "Inspection techniques for supported and suspended scaffolds",
+      "Hazard awareness and compliance",
+    ],
+    assessmentMethod: "Assessment method tailored to client requirements.",
+    notes: [
+      "Classroom instruction and practical scaffold erection/inspection exercises.",
+    ],
+    heroImage: {
+      src: "https://www.thesafetymaster.com/wp-content/uploads/2023/06/WhatsApp-Image-2023-06-07-at-9.52.09-AM.jpeg",
+      alt: "Scaffold structure on a construction site",
+    },
+    icon: HardHat,
+  },
+  {
     title: "Lift Planning",
     slug: "lift-planning",
     summary:
-      "Course for professionals planning and supervising high-risk lifting operations.",
+      "Teaches personnel how to design, document, and supervise crane and lifting operations in compliance with industry standards and BS 7121.",
     description:
-      "Course for professionals planning and supervising high-risk lifting operations.",
+      "Teaches personnel how to design, document, and supervise crane and lifting operations in compliance with industry standards and BS 7121.",
     duration: "3 days (2 training + 1 assessment)",
-    entryRequirements: "None",
+    entryRequirements:
+      "Supervisors, engineers, and planners involved in lifting operations.",
     courseContent: [
-      "Roles and responsibilities",
-      "Crane selection",
-      "Site preparation",
-      "Lift planning",
-      "Calculations",
-      "Documentation",
-      "Practical lift execution",
+      "Load assessment and rigging selection",
+      "Crane configuration and ground stability",
+      "Risk management and documentation",
+      "Safe lift execution",
     ],
     assessmentMethod: "Written lift plan and supervised practical lift.",
+    notes: ["Classroom theory and supervised practical lift planning."],
     heroImage: {
       src: "https://primeliftsafetyng.com/wp-content/uploads/2024/05/Lifting-Operation-Planning.png",
       alt: "Engineers reviewing a lift plan on site",

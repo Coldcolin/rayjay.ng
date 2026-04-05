@@ -90,7 +90,7 @@ const excellence = [
 
 const stats = [
   { label: "Indigenous Strength", value: "100% Local Content" },
-  { label: "CAC Registration", value: "RC 2621639" },
+  { label: "CAC Registration", value: "RC 1621639" },
   { label: "Quality System", value: "ISO 9001:2015 Aligned" },
   { label: "Regional Reach", value: "West Africa Focus" },
 ]
@@ -377,7 +377,7 @@ function SiteFooter() {
           <Anchor className="size-4 text-ember-400" />
           <span>Rayjay Multinational Company Limited</span>
         </div>
-        <span>CAC RC 2621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
+        <span>CAC RC 1621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
       </div>
     </footer>
   )
@@ -760,7 +760,7 @@ export default function App() {
                   </div>
                   <div className="min-w-0 pt-0.5">
                     <p className="font-mono text-2xl font-bold tracking-tight text-ink-950">
-                      RC 2621639
+                      RC 1621639
                     </p>
                     <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-sea-600">
                       CAC Verified · Nigeria
