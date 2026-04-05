@@ -196,7 +196,7 @@ function SiteHeader({
     <header className="relative">
       <div className="bg-ink-950 text-white">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70">
-          <span>www.rayjay.com.ng</span>
+          <span>rayjay mc ltd</span>
           <span>Marine • Oil & Gas • Construction • Exploration</span>
           <span>Accountable. Trustworthy. Indigenous.</span>
         </div>
@@ -452,8 +452,8 @@ function ServiceDetailPage({
     <div className="text-ink-950">
       <SiteHeader isDetail onNavigate={onNavigate} />
       <main>
-        <section className="relative">
-          <div className="h-[320px] w-full md:h-[420px]">
+        <section className="relative isolate">
+          <div className="absolute inset-0">
             <img
               src={heroSrc}
               alt={service.heroImage.alt}
@@ -466,8 +466,8 @@ function ServiceDetailPage({
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-ink-950/90 via-ink-950/60 to-transparent" />
-          <div className="absolute inset-0">
-            <div className="mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-10">
+          <div className="relative z-10 mx-auto flex min-h-[320px] max-w-6xl flex-col px-6 pb-10 pt-8 md:min-h-[420px]">
+            <div className="mt-auto w-full">
               <Button
                 variant="outline"
                 onClick={() => onNavigate("/", "services")}
@@ -740,12 +740,12 @@ export default function App() {
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute -top-6 right-8 flex items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 text-sm shadow-soft">
+            <div className="relative z-10">
+              <div className="absolute -top-6 right-8 z-20 flex items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 text-sm shadow-soft">
                 <ShieldCheck className="size-5 text-ember-600" />
                 ISO 9001:2015 Requirements Aligned
               </div>
-              <div className="overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-lift animate-floaty">
+              <div className="relative z-0 overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-lift animate-floaty">
                 <img
                   src="/hero.png"
                   alt="Industrial operations"
