@@ -417,8 +417,8 @@ function ServiceDetailPage({
               Service Not Found
             </h1>
             <p className="mx-auto mt-3 max-w-2xl text-lg text-ink-800">
-              We couldn’t locate that training service. Browse the catalog below
-              or return to the main services list.
+              We couldn’t locate that service. Browse the catalog below or
+              return to the main services list.
             </p>
             <Button
               onClick={() => onNavigate("/", "services")}
@@ -484,7 +484,7 @@ function ServiceDetailPage({
                     </span>
                   ) : null}
                   <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1">
-                    Training Program
+                    Service Offering
                   </span>
                 </div>
                 <h1 className="text-balance font-display text-4xl font-semibold uppercase tracking-[0.06em] text-white md:text-5xl">
@@ -508,12 +508,12 @@ function ServiceDetailPage({
           <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-white/70 bg-white/95 p-8 shadow-lift">
               <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
-                Course Description
+                Service Description
               </p>
               <p className="mt-4 text-lg text-ink-900">{service.description}</p>
               <div className="mt-8">
                 <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
-                  Course Content
+                  Service Scope
                 </p>
                 <div className="mt-4 grid gap-3 text-sm text-ink-800">
                   {service.courseContent.map((item) => (
@@ -528,7 +528,7 @@ function ServiceDetailPage({
             <div className="space-y-6">
               <div className="rounded-3xl border border-ink-900/10 bg-white/95 p-6 shadow-soft">
                 <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
-                  Program Details
+                  Service Details
                 </p>
                 <div className="mt-4 space-y-4 text-sm text-ink-800">
                   <div>
@@ -552,7 +552,7 @@ function ServiceDetailPage({
               <div className="rounded-3xl border border-sea-200 bg-sea-600 p-6 text-white shadow-soft">
                 <div className="flex items-center gap-3">
                   <BookCheck className="size-5 text-ember-200" />
-                  <h3 className="text-lg font-semibold">Assessment Method</h3>
+                  <h3 className="text-lg font-semibold">Quality Approach</h3>
                 </div>
                 <p className="mt-3 text-sm text-white/80">
                   {service.assessmentMethod}
@@ -579,10 +579,10 @@ function ServiceDetailPage({
               >
                 <a
                   href={`mailto:info@rayjayng.com?subject=${encodeURIComponent(
-                    `${service.title} Training Request`
+                    `${service.title} Service Inquiry`
                   )}`}
                 >
-                  Request Training
+                  Request Service
                   <ArrowUpRight className="ml-2 size-4" />
                 </a>
               </Button>
@@ -599,7 +599,7 @@ function ServiceDetailPage({
                     Explore More
                   </p>
                   <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
-                    More Training Services
+                    More Services
                   </h2>
                 </div>
                 <Button
@@ -839,12 +839,12 @@ export default function App() {
                   Services
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
-                  LEEA-aligned lifting and safety training programs.
+                  Inspection, certification, supply, and specialty services.
                 </h2>
               </div>
               <div className="flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember-200">
                 <span className="inline-flex size-2 rounded-full bg-ember-300" />
-                Industry-ready training delivery
+                Industry-ready service delivery
               </div>
             </div>
             <div className="mt-10 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">

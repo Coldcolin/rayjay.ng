@@ -440,4 +440,343 @@ export const services: Service[] = [
     },
     icon: ClipboardCheck,
   },
+  {
+    title: "Lifting Equipment Inspection & Certification",
+    slug: "lifting-equipment-inspection-certification",
+    summary:
+      "Thorough examination and certification of lifting equipment for safety, compliance, and structural integrity.",
+    description:
+      "We conduct comprehensive inspections and certification of lifting equipment using visual checks, non-destructive testing, and load testing to confirm safe operation and regulatory compliance.",
+    duration: "Every 6-12 months or as required",
+    entryRequirements:
+      "Asset owners and operators of cranes, forklifts, hoists, and lifting accessories.",
+    courseContent: [
+      "Visual and functional inspection",
+      "Non-destructive testing (NDT) checks",
+      "Load testing and performance verification",
+      "Compliance documentation and certification",
+    ],
+    assessmentMethod:
+      "Certified inspection report with defect classification and certificate issuance.",
+    notes: [
+      "Applies to cranes, forklifts, hoists, and lifting accessories.",
+    ],
+    heroImage: {
+      src: "/offLift.jpeg",
+      alt: "Inspection team assessing lifting equipment",
+    },
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Earthmoving Equipment Inspection",
+    slug: "earthmoving-equipment-inspection",
+    summary:
+      "Comprehensive inspection for earthmoving machinery to ensure safe, efficient, and compliant operations.",
+    description:
+      "Our certified team inspects earthmoving equipment to verify safety systems, mechanical condition, and regulatory compliance before and during operation.",
+    duration: "Scheduled or on-demand",
+    entryRequirements:
+      "Companies operating excavators, loaders, bulldozers, graders, and related equipment.",
+    courseContent: [
+      "Mechanical and structural condition checks",
+      "Hydraulic and control-system verification",
+      "Brake, steering, and stability checks",
+      "Regulatory compliance reporting",
+    ],
+    assessmentMethod:
+      "Inspection checklist, deficiency report, and compliance recommendation.",
+    heroImage: {
+      src: "/constructionequipment.webp",
+      alt: "Earthmoving equipment under field inspection",
+    },
+    icon: Shovel,
+  },
+  {
+    title: "Work-at-Height Equipment Inspection",
+    slug: "work-at-height-equipment-inspection",
+    summary:
+      "Professional inspection of harnesses, lanyards, lifelines, and anchors to reduce fall risks.",
+    description:
+      "We provide documented inspections for work-at-height equipment to ensure every item remains compliant, fit for purpose, and ready for safe use.",
+    duration: "Periodic and pre-use intervals",
+    entryRequirements:
+      "Organizations deploying personnel for elevated or rope-supported work.",
+    courseContent: [
+      "Harness and lanyard integrity checks",
+      "Lifeline and anchor-point inspection",
+      "Serviceability tagging and documentation",
+      "Compliance tracking and replacement advice",
+    ],
+    assessmentMethod:
+      "Competent-person inspection log with pass/fail status and corrective actions.",
+    heroImage: {
+      src: "/RopeStuff.jpg",
+      alt: "Technician inspecting fall-protection equipment",
+    },
+    icon: Compass,
+  },
+  {
+    title: "Non-Destructive Testing (NDT) Services",
+    slug: "non-destructive-testing-services",
+    summary:
+      "Advanced NDT services to detect defects and assess material integrity without damaging components.",
+    description:
+      "We deliver a full range of NDT inspections to evaluate the strength, integrity, and reliability of materials and equipment while preserving operational usability.",
+    duration: "Per project scope",
+    entryRequirements:
+      "Industrial assets requiring integrity assurance and defect detection.",
+    courseContent: [
+      "Surface and subsurface defect detection",
+      "Weld and joint integrity assessment",
+      "Thickness and corrosion monitoring",
+      "Reporting for maintenance planning",
+    ],
+    assessmentMethod:
+      "Technique-based NDT reports with findings, severity ratings, and recommendations.",
+    heroImage: {
+      src: "/InstruCal.png",
+      alt: "Technician performing non-destructive testing",
+    },
+    icon: Radar,
+  },
+  {
+    title: "Life Rafts & Scramble Nets Inspection",
+    slug: "life-rafts-scramble-nets-inspection",
+    summary:
+      "Certified inspection of life rafts and scramble nets in line with SOLAS maritime safety requirements.",
+    description:
+      "We inspect life rafts and scramble nets to verify emergency readiness, serviceability, and compliance with international maritime standards.",
+    duration: "As required by marine safety schedule",
+    entryRequirements:
+      "Vessel operators, offshore facilities, and marine logistics teams.",
+    courseContent: [
+      "Life raft condition and readiness checks",
+      "Scramble net structural inspection",
+      "Emergency deployment readiness verification",
+      "Compliance documentation and status records",
+    ],
+    assessmentMethod:
+      "Certified inspection outcome with deficiencies and corrective action guidance.",
+    heroImage: {
+      src: "/MarineLog.png",
+      alt: "Marine safety gear prepared for inspection",
+    },
+    icon: LifeBuoy,
+  },
+  {
+    title: "Industrial Lifting Equipment Supply",
+    slug: "industrial-lifting-equipment-supply",
+    summary:
+      "Supply of industrial lifting equipment including cranes, forklifts, and MEWPs for project operations.",
+    description:
+      "We source and deliver lifting equipment tailored to project needs, with equipment verification and support for safe operational deployment.",
+    duration: "Project-based and recurring supply",
+    entryRequirements:
+      "Organizations requiring procurement support for lifting operations.",
+    courseContent: [
+      "Equipment selection based on project requirements",
+      "Technical specification and compatibility checks",
+      "Supply logistics and delivery coordination",
+      "Pre-delivery equipment verification",
+    ],
+    assessmentMethod:
+      "Vendor quality checks, delivery verification, and documentation handover.",
+    heroImage: {
+      src: "/HeavyLifting.png",
+      alt: "Industrial lifting equipment staged for deployment",
+    },
+    icon: Truck,
+  },
+  {
+    title: "Lifting Accessories Supply",
+    slug: "lifting-accessories-supply",
+    summary:
+      "Supply of certified lifting accessories including slings, shackles, chain blocks, and rigging hardware.",
+    description:
+      "We provide a broad inventory of lifting accessories to support safe and compliant rigging operations across marine and industrial projects.",
+    duration: "On-demand and contract supply",
+    entryRequirements:
+      "Teams managing lifting, rigging, and materials-handling operations.",
+    courseContent: [
+      "Wire rope and webbing sling supply",
+      "Shackles, hooks, chain blocks, and rigging screws",
+      "Specification matching to load requirements",
+      "Traceability and product documentation",
+    ],
+    assessmentMethod:
+      "Pre-dispatch quality verification and conformity documentation.",
+    heroImage: {
+      src: "/HeavyLifting.png",
+      alt: "Certified lifting accessories arranged for supply",
+    },
+    icon: Wrench,
+  },
+  {
+    title: "Marine Equipment Supply",
+    slug: "marine-equipment-supply",
+    summary:
+      "Supply of essential marine equipment including life buoys, davits, winches, nets, fenders, and rafts.",
+    description:
+      "We deliver marine-grade equipment required for vessel operations, offshore support, and emergency readiness with dependable logistics.",
+    duration: "Routine and emergency procurement",
+    entryRequirements:
+      "Marine operators, offshore projects, and logistics providers.",
+    courseContent: [
+      "Safety and lifesaving equipment supply",
+      "Deck and handling equipment procurement",
+      "Marine asset compatibility checks",
+      "Logistics and delivery support",
+    ],
+    assessmentMethod:
+      "Supply quality controls and conformance documentation at handover.",
+    heroImage: {
+      src: "/MarineLog.png",
+      alt: "Marine equipment prepared for offshore use",
+    },
+    icon: Ship,
+  },
+  {
+    title: "Technical Manpower Supply",
+    slug: "technical-manpower-supply",
+    summary:
+      "Provision of skilled technical manpower including riggers, crane operators, scaffolders, and welders.",
+    description:
+      "We deploy qualified personnel to support lifting, maintenance, and industrial operations with reliable, safety-focused workforce coverage.",
+    duration: "Short-term, rotational, or long-term engagement",
+    entryRequirements:
+      "Projects requiring vetted and competent technical personnel.",
+    courseContent: [
+      "Role-based personnel matching",
+      "Competency and certification verification",
+      "Mobilization and shift planning support",
+      "Performance and compliance oversight",
+    ],
+    assessmentMethod:
+      "Workforce qualification validation and assignment quality monitoring.",
+    heroImage: {
+      src: "/FabMent.jpeg",
+      alt: "Technical crew deployed for field operations",
+    },
+    icon: Users,
+  },
+  {
+    title: "Rope Access Services",
+    slug: "rope-access-services",
+    summary:
+      "Safe rope access operations for difficult-to-reach maintenance and inspection locations.",
+    description:
+      "Our rope access teams execute inspection, maintenance, and repair scopes in elevated or confined locations where conventional access is impractical.",
+    duration: "Per task scope",
+    entryRequirements:
+      "Sites requiring safe access to high or hard-to-reach structures.",
+    courseContent: [
+      "Task planning and rescue readiness",
+      "Access setup and safety controls",
+      "Inspection and maintenance execution",
+      "Close-out reporting and recommendations",
+    ],
+    assessmentMethod:
+      "Method statement compliance and task completion verification.",
+    heroImage: {
+      src: "/RopeStuff.jpg",
+      alt: "Rope access technicians on industrial structure",
+    },
+    icon: Compass,
+  },
+  {
+    title: "Marine Maintenance Works",
+    slug: "marine-maintenance-works",
+    summary:
+      "Specialized marine maintenance services to keep vessels and offshore assets operational.",
+    description:
+      "We provide planned and corrective marine maintenance works covering mechanical systems, deck equipment, and structural upkeep for reliable uptime.",
+    duration: "Planned or corrective maintenance windows",
+    entryRequirements:
+      "Marine assets requiring preventive or breakdown maintenance support.",
+    courseContent: [
+      "Mechanical and deck equipment servicing",
+      "Structural and corrosion-related maintenance",
+      "Operational readiness checks",
+      "Maintenance documentation and handover",
+    ],
+    assessmentMethod:
+      "Maintenance completion records with verification against approved scope.",
+    heroImage: {
+      src: "/MarineLog.png",
+      alt: "Marine maintenance team working on deck equipment",
+    },
+    icon: Ship,
+  },
+  {
+    title: "Crane LMI Calibration",
+    slug: "crane-lmi-calibration",
+    summary:
+      "Calibration of crane Load Moment Indicator systems for precise and safe lifting operations.",
+    description:
+      "We calibrate and verify crane LMI systems to improve load monitoring accuracy, reduce lifting risk, and support operational compliance.",
+    duration: "Scheduled calibration intervals",
+    entryRequirements:
+      "Operators and owners of cranes equipped with LMI systems.",
+    courseContent: [
+      "LMI system diagnostics",
+      "Sensor and display calibration",
+      "Load verification checks",
+      "Calibration documentation",
+    ],
+    assessmentMethod:
+      "Calibration certificate and post-calibration performance verification.",
+    heroImage: {
+      src: "/InstruCal.png",
+      alt: "Engineer calibrating crane LMI instrumentation",
+    },
+    icon: Gauge,
+  },
+  {
+    title: "Street Solar Light Installation",
+    slug: "street-solar-light-installation",
+    summary:
+      "Design and installation of street solar lighting systems for roads, facilities, and communities.",
+    description:
+      "We deliver end-to-end solar street light installations including site assessment, mounting, wiring, and commissioning for reliable outdoor lighting.",
+    duration: "Project implementation timeline",
+    entryRequirements:
+      "Public or private sites requiring off-grid or hybrid lighting solutions.",
+    courseContent: [
+      "Site survey and layout planning",
+      "Mounting and civil preparation",
+      "Electrical connections and commissioning",
+      "Post-installation performance checks",
+    ],
+    assessmentMethod:
+      "Commissioning checklist and installation quality verification.",
+    heroImage: {
+      src: "/FabMent.jpeg",
+      alt: "Installed solar street lights along a roadway",
+    },
+    icon: Zap,
+  },
+  {
+    title: "General Contracting Services",
+    slug: "general-contracting-services",
+    summary:
+      "Comprehensive contracting support across industrial, marine, and infrastructure projects.",
+    description:
+      "We execute multidisciplinary contracting scopes from planning and resource mobilization to delivery and quality close-out across varied project environments.",
+    duration: "Per contract scope and schedule",
+    entryRequirements:
+      "Clients requiring single-point coordination for complex service delivery.",
+    courseContent: [
+      "Scope planning and project coordination",
+      "Technical resource and vendor mobilization",
+      "Execution supervision and HSE compliance",
+      "Quality control and final handover",
+    ],
+    assessmentMethod:
+      "Milestone-based quality reviews and contractual deliverable validation.",
+    heroImage: {
+      src: "/FabMent.jpeg",
+      alt: "Project team coordinating a general contracting scope",
+    },
+    icon: HardHat,
+  },
 ]
