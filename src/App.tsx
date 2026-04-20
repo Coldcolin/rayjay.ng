@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button"
-import { services, type Service } from "@/data/services"
+import {
+  services,
+  serviceCategories,
+  resolveServicesBySlugs,
+  type Service,
+} from "@/data/services"
+import { cn } from "@/lib/utils"
 import {
   Anchor,
   ArrowLeft,
@@ -7,7 +13,10 @@ import {
   BadgeCheck,
   BookCheck,
   CheckCircle2,
+  ChevronDown,
   ClipboardCheck,
+  Menu,
+  X,
   Compass,
   Factory,
   Globe,
@@ -20,7 +29,13 @@ import {
   Truck,
   Users,
 } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from "react"
 
 const coreValues = [
   {
@@ -185,6 +200,112 @@ const getServiceSlug = (pathname: string) => {
   return slug.length > 0 ? slug : null
 }
 
+function ServiceNavAccordion({
+  expandedCategoryId,
+  onExpandedChange,
+  onServiceClick,
+  theme,
+  className,
+}: {
+  expandedCategoryId: string | null
+  onExpandedChange: (id: string | null) => void
+  onServiceClick: (slug: string) => void
+  theme: "light" | "dark"
+  className?: string
+}) {
+  const isDark = theme === "dark"
+  return (
+    <div className={cn("space-y-0", className)}>
+      {serviceCategories.map((category) => {
+        const isOpen = expandedCategoryId === category.id
+        return (
+          <div
+            key={category.id}
+            className={cn(
+              "border-b last:border-b-0",
+              isDark ? "border-white/15" : "border-ink-900/10",
+            )}
+          >
+            <button
+              type="button"
+              className={cn(
+                "flex w-full items-center justify-between gap-3 py-3 text-left text-sm font-semibold transition-colors",
+                isDark
+                  ? "text-white hover:text-ember-200"
+                  : "text-ink-900 hover:text-sea-600",
+              )}
+              aria-expanded={isOpen}
+              onClick={() =>
+                onExpandedChange(isOpen ? null : category.id)
+              }
+            >
+              <span className="min-w-0 uppercase tracking-[0.12em]">
+                {category.title}
+              </span>
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 transition-transform duration-200",
+                  isDark ? "text-ember-200/90" : "text-ink-800/60",
+                  isOpen && "rotate-180",
+                )}
+              />
+            </button>
+            {isOpen ? (
+              <div
+                className={cn(
+                  "pb-3 pl-1",
+                  isDark ? "text-white/90" : "text-ink-900",
+                )}
+              >
+                <p
+                  className={cn(
+                    "text-xs leading-relaxed",
+                    isDark ? "text-white/60" : "text-ink-800/70",
+                  )}
+                >
+                  {category.description}
+                </p>
+                <div className="mt-4 space-y-5">
+                  {category.subcategories.map((sub) => (
+                    <div key={sub.id}>
+                      <p
+                        className={cn(
+                          "text-[10px] font-semibold uppercase tracking-[0.22em]",
+                          isDark ? "text-ember-200/85" : "text-ink-800/55",
+                        )}
+                      >
+                        {sub.title}
+                      </p>
+                      <ul className="mt-2 space-y-0.5">
+                        {resolveServicesBySlugs(sub.serviceSlugs).map((svc) => (
+                          <li key={svc.slug}>
+                            <button
+                              type="button"
+                              className={cn(
+                                "w-full rounded-md px-2 py-2 text-left text-sm transition-colors",
+                                isDark
+                                  ? "text-white/90 hover:bg-white/10 hover:text-white"
+                                  : "text-ink-900 hover:bg-sea-50 hover:text-sea-700",
+                              )}
+                              onClick={() => onServiceClick(svc.slug)}
+                            >
+                              {svc.title}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 function SiteHeader({
   isDetail = false,
   onNavigate,
@@ -192,25 +313,107 @@ function SiteHeader({
   isDetail?: boolean
   onNavigate?: NavigateFn
 }) {
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [dropdownExpandedCategoryId, setDropdownExpandedCategoryId] = useState<
+    string | null
+  >(null)
+  const [drawerExpandedCategoryId, setDrawerExpandedCategoryId] = useState<
+    string | null
+  >(null)
+  const servicesMenuRef = useRef<HTMLDivElement>(null)
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false)
+    setDrawerExpandedCategoryId(null)
+  }
+
+  const handleNavLinkClick = (
+    event: ReactMouseEvent<HTMLAnchorElement>,
+    sectionId: string,
+  ) => {
+    if (isDetail && onNavigate) {
+      event.preventDefault()
+      onNavigate("/", sectionId)
+    }
+    closeMobileNav()
+  }
+
+  useEffect(() => {
+    if (!servicesOpen) {
+      setDropdownExpandedCategoryId(null)
+    }
+  }, [servicesOpen])
+
+  useEffect(() => {
+    if (!mobileNavOpen) {
+      return
+    }
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [mobileNavOpen])
+
+  useEffect(() => {
+    if (!servicesOpen) {
+      return
+    }
+    const handlePointerDown = (event: MouseEvent) => {
+      if (
+        servicesMenuRef.current &&
+        !servicesMenuRef.current.contains(event.target as Node)
+      ) {
+        setServicesOpen(false)
+      }
+    }
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setServicesOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handlePointerDown)
+    window.addEventListener("keydown", handleKey)
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown)
+      window.removeEventListener("keydown", handleKey)
+    }
+  }, [servicesOpen])
+
+  useEffect(() => {
+    if (!mobileNavOpen) {
+      return
+    }
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMobileNav()
+      }
+    }
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [mobileNavOpen])
+
   return (
     <header className="relative">
       <div className="bg-ink-950 text-white">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70">
           <span>rayjay mc ltd</span>
-          <span>Marine • Oil & Gas • Construction • Exploration</span>
-          <span>Accountable. Trustworthy. Indigenous.</span>
+          <span className="hidden sm:inline">
+            Marine • Oil & Gas • Construction • Exploration
+          </span>
+          <span className="hidden md:inline">Accountable. Trustworthy. Indigenous.</span>
         </div>
       </div>
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
-        <div className="flex items-center gap-3">
-          <div className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl sm:size-28">
             <img
               src="/rayjay.png"
               alt="Rayjay Multinational Company Limited logo"
               className="h-full w-full object-contain shadow-soft"
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="font-display text-lg uppercase tracking-[0.2em]">Rayjay</p>
             <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70">
               Multinational Company Limited
@@ -218,30 +421,184 @@ function SiteHeader({
           </div>
         </div>
         <nav className="hidden items-center gap-6 text-sm font-medium text-ink-800 lg:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.id}
-              href={isDetail ? `/#${link.id}` : `#${link.id}`}
-              onClick={(event) => {
-                if (!isDetail || !onNavigate) {
-                  return
-                }
-                event.preventDefault()
-                onNavigate("/", link.id)
-              }}
-              className="hover:text-sea-500"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            if (link.id === "services") {
+              return (
+                <div key={link.id} className="relative" ref={servicesMenuRef}>
+                  <button
+                    type="button"
+                    aria-expanded={servicesOpen}
+                    aria-haspopup="true"
+                    aria-controls="services-mega-menu"
+                    className="flex items-center gap-1 hover:text-sea-500"
+                    onClick={() => setServicesOpen((open) => !open)}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      className={cn(
+                        "size-4 transition-transform duration-200",
+                        servicesOpen && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  {servicesOpen ? (
+                    <div
+                      id="services-mega-menu"
+                      className="absolute right-0 top-full z-50 mt-3 w-[min(calc(100vw-2rem),22rem)] rounded-2xl border border-ink-900/10 bg-white p-4 text-ink-950 shadow-xl"
+                      role="menu"
+                    >
+                      <div className="max-h-[min(70vh,520px)] overflow-y-auto pr-1">
+                        <ServiceNavAccordion
+                          expandedCategoryId={dropdownExpandedCategoryId}
+                          onExpandedChange={setDropdownExpandedCategoryId}
+                          onServiceClick={(slug) => {
+                            onNavigate?.(`/services/${slug}`)
+                            setServicesOpen(false)
+                          }}
+                          theme="light"
+                        />
+                      </div>
+                      <div className="mt-3 border-t border-ink-900/10 pt-3 text-center">
+                        <a
+                          href={isDetail ? "/#services" : "#services"}
+                          className="text-sm font-medium text-sea-600 hover:text-sea-700"
+                          onClick={(event) => {
+                            setServicesOpen(false)
+                            if (isDetail && onNavigate) {
+                              event.preventDefault()
+                              onNavigate("/", "services")
+                            }
+                          }}
+                        >
+                          Browse full services catalog
+                        </a>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              )
+            }
+            return (
+              <a
+                key={link.id}
+                href={isDetail ? `/#${link.id}` : `#${link.id}`}
+                onClick={(event) => {
+                  if (!isDetail || !onNavigate) {
+                    return
+                  }
+                  event.preventDefault()
+                  onNavigate("/", link.id)
+                }}
+                className="hover:text-sea-500"
+              >
+                {link.label}
+              </a>
+            )
+          })}
         </nav>
-        <Button asChild className="bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700">
-          <a href="mailto:info@rayjayng.com?subject=Quotation%20Request">
-            Get a Quote
-            <ArrowUpRight className="ml-2 size-4" />
-          </a>
-        </Button>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileNavOpen((open) => !open)}
+          >
+            {mobileNavOpen ? (
+              <X className="size-6 text-ink-900" />
+            ) : (
+              <Menu className="size-6 text-ink-900" />
+            )}
+          </Button>
+          <Button
+            asChild
+            className="hidden bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700 sm:inline-flex"
+          >
+            <a href="mailto:info@rayjayng.com?subject=Quotation%20Request">
+              Get a Quote
+              <ArrowUpRight className="ml-2 size-4" />
+            </a>
+          </Button>
+        </div>
       </div>
+
+      {mobileNavOpen ? (
+        <div className="fixed inset-0 z-[100] lg:hidden">
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="absolute inset-0 bg-ink-950/50 backdrop-blur-sm"
+            onClick={closeMobileNav}
+          />
+          <div className="absolute right-0 top-0 flex h-full w-[min(100%,380px)] flex-col border-l border-ink-900/10 bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-ink-900/10 px-5 py-4">
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-ink-900">
+                Menu
+              </span>
+              <button
+                type="button"
+                aria-label="Close menu"
+                className="rounded-lg p-2 text-ink-800 hover:bg-ink-900/5"
+                onClick={closeMobileNav}
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+            <nav className="flex-1 overflow-y-auto px-5 py-4 text-sm font-medium text-ink-900">
+              {navLinks.map((link) => {
+                if (link.id === "services") {
+                  return (
+                    <div key={link.id} className="mb-4 border-b border-ink-900/10 pb-4">
+                      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-ink-800/60">
+                        {link.label}
+                      </p>
+                      <ServiceNavAccordion
+                        expandedCategoryId={drawerExpandedCategoryId}
+                        onExpandedChange={setDrawerExpandedCategoryId}
+                        onServiceClick={(slug) => {
+                          onNavigate?.(`/services/${slug}`)
+                          closeMobileNav()
+                        }}
+                        theme="light"
+                      />
+                      <a
+                        href={isDetail ? "/#services" : "#services"}
+                        className="mt-3 block text-center text-sm font-medium text-sea-600"
+                        onClick={(event) => handleNavLinkClick(event, "services")}
+                      >
+                        Full services catalog →
+                      </a>
+                    </div>
+                  )
+                }
+                return (
+                  <a
+                    key={link.id}
+                    href={isDetail ? `/#${link.id}` : `#${link.id}`}
+                    className="mb-3 block rounded-lg px-2 py-3 hover:bg-sea-50 hover:text-sea-700"
+                    onClick={(event) => handleNavLinkClick(event, link.id)}
+                  >
+                    {link.label}
+                  </a>
+                )
+              })}
+              <Button
+                asChild
+                className="mt-4 w-full bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700"
+              >
+                <a
+                  href="mailto:info@rayjayng.com?subject=Quotation%20Request"
+                  onClick={closeMobileNav}
+                >
+                  Get a Quote
+                  <ArrowUpRight className="ml-2 size-4" />
+                </a>
+              </Button>
+            </nav>
+          </div>
+        </div>
+      ) : null}
     </header>
   )
 }
@@ -632,6 +989,9 @@ function ServiceDetailPage({
 
 export default function App() {
   const [path, setPath] = useState(() => window.location.pathname)
+  const [homeExpandedCategoryId, setHomeExpandedCategoryId] = useState<
+    string | null
+  >(null)
 
   useEffect(() => {
     const handlePopState = () => {
@@ -676,7 +1036,7 @@ export default function App() {
 
   return (
     <div className="text-ink-950">
-      <SiteHeader onNavigate={navigate} />
+      <SiteHeader isDetail={false} onNavigate={navigate} />
 
       <main>
         <section className="relative overflow-hidden">
@@ -839,7 +1199,7 @@ export default function App() {
                   Services
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
-                  Inspection, certification, supply, and specialty services.
+                  Training, inspection, supplies, and special services—organized by category.
                 </h2>
               </div>
               <div className="flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember-200">
@@ -847,14 +1207,64 @@ export default function App() {
                 Industry-ready service delivery
               </div>
             </div>
-            <div className="mt-10 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {services.map((service) => (
-                <ServiceCard
-                  key={service.slug}
-                  service={service}
-                  onNavigate={navigate}
-                />
-              ))}
+            <div className="mt-10 space-y-3">
+              {serviceCategories.map((category) => {
+                const isOpen = homeExpandedCategoryId === category.id
+                return (
+                  <div
+                    key={category.id}
+                    className="overflow-hidden rounded-2xl border border-white/15 bg-white/[0.06]"
+                  >
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-white/5"
+                      aria-expanded={isOpen}
+                      onClick={() =>
+                        setHomeExpandedCategoryId(isOpen ? null : category.id)
+                      }
+                    >
+                      <div className="min-w-0">
+                        <h3 className="text-lg font-semibold uppercase tracking-[0.06em] text-white">
+                          {category.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-white/65">
+                          {category.description}
+                        </p>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          "size-5 shrink-0 text-ember-200 transition-transform duration-200",
+                          isOpen && "rotate-180",
+                        )}
+                      />
+                    </button>
+                    {isOpen ? (
+                      <div className="border-t border-white/10 px-4 pb-6 pt-2 sm:px-6">
+                        <div className="space-y-10">
+                          {category.subcategories.map((sub) => (
+                            <div key={sub.id}>
+                              <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-ember-200/90">
+                                {sub.title}
+                              </h4>
+                              <div className="grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
+                                {resolveServicesBySlugs(sub.serviceSlugs).map(
+                                  (service) => (
+                                    <ServiceCard
+                                      key={service.slug}
+                                      service={service}
+                                      onNavigate={navigate}
+                                    />
+                                  ),
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>

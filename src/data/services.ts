@@ -37,6 +37,20 @@ export type Service = {
   icon: LucideIcon
 }
 
+export type ServiceSubcategory = {
+  id: string
+  title: string
+  /** Service slugs in display order */
+  serviceSlugs: string[]
+}
+
+export type ServiceCategoryGroup = {
+  id: string
+  title: string
+  description: string
+  subcategories: ServiceSubcategory[]
+}
+
 export const services: Service[] = [
   {
     title: "Rigging & Lifting",
@@ -462,7 +476,7 @@ export const services: Service[] = [
       "Applies to cranes, forklifts, hoists, and lifting accessories.",
     ],
     heroImage: {
-      src: "/offLift.jpeg",
+      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgBbDbhEN2zWe2vCN3LLtMEyOUtkXY3vs7dQ&s",
       alt: "Inspection team assessing lifting equipment",
     },
     icon: ClipboardCheck,
@@ -630,7 +644,7 @@ export const services: Service[] = [
     assessmentMethod:
       "Supply quality controls and conformance documentation at handover.",
     heroImage: {
-      src: "/MarineLog.png",
+      src: "https://www.freightcenter.com/wp-content/webp-express/webp-images/uploads/2025/07/Screenshot-2025-07-08-105801.png.webp",
       alt: "Marine equipment prepared for offshore use",
     },
     icon: Ship,
@@ -689,7 +703,7 @@ export const services: Service[] = [
     summary:
       "Specialized marine maintenance services to keep vessels and offshore assets operational.",
     description:
-      "We provide planned and corrective marine maintenance works covering mechanical systems, deck equipment, and structural upkeep for reliable uptime.",
+      "We provide planned and corrective marine maintenance works covering mechanical systems, deck equipment, and structural upkeep for reliable uptime—including offshore maintenance using C-claw technology for metal bonding where applicable.",
     duration: "Planned or corrective maintenance windows",
     entryRequirements:
       "Marine assets requiring preventive or breakdown maintenance support.",
@@ -726,7 +740,7 @@ export const services: Service[] = [
     assessmentMethod:
       "Calibration certificate and post-calibration performance verification.",
     heroImage: {
-      src: "/InstruCal.png",
+      src: "https://qualitycalibrationbd.com/wp-content/uploads/2025/06/Tower-Crane-Calibration-Matters-1024x768.webp",
       alt: "Engineer calibrating crane LMI instrumentation",
     },
     icon: Gauge,
@@ -750,7 +764,7 @@ export const services: Service[] = [
     assessmentMethod:
       "Commissioning checklist and installation quality verification.",
     heroImage: {
-      src: "/FabMent.jpeg",
+      src: "https://solarledlight.com/wp-content/uploads/2023/11/Solar-led-street-light-installation-in-Antigua.jpg",
       alt: "Installed solar street lights along a roadway",
     },
     icon: Zap,
@@ -774,9 +788,190 @@ export const services: Service[] = [
     assessmentMethod:
       "Milestone-based quality reviews and contractual deliverable validation.",
     heroImage: {
-      src: "/FabMent.jpeg",
+      src: "https://baamiis.com/wp-content/uploads/2025/07/Contracting.png",
       alt: "Project team coordinating a general contracting scope",
     },
     icon: HardHat,
   },
+  {
+    title: "Rope Access Kits Inspection",
+    slug: "rope-access-kits-inspection",
+    summary:
+      "Documented inspection of rope access kits, harnesses, connectors, and related PPE for safe deployment.",
+    description:
+      "We inspect rope access kits and associated personal protective equipment to verify configuration, serviceability, and compliance before work-at-height or rope access operations.",
+    duration: "Periodic and pre-use intervals",
+    entryRequirements:
+      "Teams using rope access systems, work-at-height PPE, and rescue kits on industrial or offshore sites.",
+    courseContent: [
+      "Rope, kernmantle, and accessory integrity checks",
+      "Connector, descender, and harness inspection",
+      "Traceability, tagging, and retirement criteria",
+      "Compliance documentation and corrective actions",
+    ],
+    assessmentMethod:
+      "Competent-person inspection records with pass/fail status and replacement guidance.",
+    heroImage: {
+      src: "/RopeStuff.jpg",
+      alt: "Rope access kit laid out for inspection",
+    },
+    icon: Compass,
+  },
+  {
+    title: "Earthmoving Equipment Supply",
+    slug: "earthmoving-equipment-supply",
+    summary:
+      "Supply of earthmoving machinery including dozers, excavators, loaders, and graders for project delivery.",
+    description:
+      "We support procurement and supply of earthmoving equipment aligned to project scope, with specification checks and logistics coordination for safe site deployment.",
+    duration: "Project-based and recurring supply",
+    entryRequirements:
+      "Construction, mining, and infrastructure teams requiring heavy earthmoving assets.",
+    courseContent: [
+      "Equipment selection to match ground conditions and production targets",
+      "Technical specification and compatibility review",
+      "Supply logistics and delivery coordination",
+      "Pre-delivery verification and documentation handover",
+    ],
+    assessmentMethod:
+      "Vendor quality checks, delivery verification, and conformity documentation.",
+    heroImage: {
+      src: "/constructionequipment.webp",
+      alt: "Earthmoving equipment on a project site",
+    },
+    icon: Shovel,
+  },
+  {
+    title: "Safety Equipment Supply",
+    slug: "safety-equipment-supply",
+    summary:
+      "Supply of industrial safety equipment including PPE, fall protection, gas detection, and site safety consumables.",
+    description:
+      "We source and deliver safety equipment to support compliant operations across lifting, marine, and industrial environments, with traceability and specification matching.",
+    duration: "On-demand and contract supply",
+    entryRequirements:
+      "Organizations standardizing PPE, rescue, and site safety inventories.",
+    courseContent: [
+      "PPE and fall-arrest consumables",
+      "Gas detection and breathing apparatus support items",
+      "Rescue and emergency readiness accessories",
+      "Specification matching and product documentation",
+    ],
+    assessmentMethod:
+      "Pre-dispatch quality verification and conformity documentation.",
+    heroImage: {
+      src: "https://www.supplyone.com/wp-content/uploads/2024/06/supplyone-Safety-PPE-1.jpg",
+      alt: "Safety equipment staged for deployment",
+    },
+    icon: ShieldCheck,
+  },
 ]
+
+export const serviceCategories: ServiceCategoryGroup[] = [
+  {
+    id: "training",
+    title: "Training",
+    description:
+      "LOLER-aligned and inspector programmes covering operators, rigging, planning, and equipment examination skills.",
+    subcategories: [
+      {
+        id: "loler-training",
+        title: "LOLER training",
+        serviceSlugs: [
+          "crane-operator-training",
+          "forklift-training",
+          "electric-overhead-travelling-crane",
+          "banksman-slinging-training",
+          "rigging-lifting",
+          "lift-planning",
+          "work-at-height",
+          "appointed-person-lifting-operations",
+          "mobile-crane-operation",
+          "manual-handling-training",
+          "scaffold-erection-inspection-training",
+          "rigging-loft-management-equipment-inspection",
+        ],
+      },
+      {
+        id: "lifting-equipment-inspector-training",
+        title: "Lifting equipment inspector training",
+        serviceSlugs: [
+          "lifting-accessories-inspection",
+          "manual-lifting-machines",
+          "powered-lifting-machines",
+          "offshore-containers-certification",
+        ],
+      },
+    ],
+  },
+  {
+    id: "inspection",
+    title: "Inspection & certification",
+    description:
+      "Thorough examination, certification, and compliance reporting for lifting, earthmoving, height, rope access, and lifesaving assets.",
+    subcategories: [
+      {
+        id: "inspection-certification",
+        title: "Inspection & certification",
+        serviceSlugs: [
+          "lifting-equipment-inspection-certification",
+          "offshore-crane-inspection",
+          "earthmoving-equipment-inspection",
+          "work-at-height-equipment-inspection",
+          "rope-access-kits-inspection",
+          "life-rafts-scramble-nets-inspection",
+        ],
+      },
+    ],
+  },
+  {
+    id: "supplies",
+    title: "Supplies",
+    description:
+      "Equipment, accessories, marine assets, safety inventories, and technical manpower to keep operations moving.",
+    subcategories: [
+      {
+        id: "supplies-main",
+        title: "Equipment & resources",
+        serviceSlugs: [
+          "industrial-lifting-equipment-supply",
+          "earthmoving-equipment-supply",
+          "lifting-accessories-supply",
+          "marine-equipment-supply",
+          "safety-equipment-supply",
+          "technical-manpower-supply",
+        ],
+      },
+    ],
+  },
+  {
+    id: "special",
+    title: "Special services",
+    description:
+      "Rope access, NDT, solar installation, offshore maintenance, contracting, and crane LMI calibration.",
+    subcategories: [
+      {
+        id: "special-main",
+        title: "Specialist offerings",
+        serviceSlugs: [
+          "rope-access-services",
+          "non-destructive-testing-services",
+          "street-solar-light-installation",
+          "marine-maintenance-works",
+          "general-contracting-services",
+          "crane-lmi-calibration",
+        ],
+      },
+    ],
+  },
+]
+
+export function getServiceBySlug(slug: string): Service | undefined {
+  return services.find((s) => s.slug === slug)
+}
+
+export function resolveServicesBySlugs(slugs: string[]): Service[] {
+  return slugs
+    .map((slug) => getServiceBySlug(slug))
+    .filter((s): s is Service => Boolean(s))
+}
