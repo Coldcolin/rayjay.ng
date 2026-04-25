@@ -958,8 +958,8 @@ export const serviceCategories: ServiceCategoryGroup[] = [
           "non-destructive-testing-services",
           "street-solar-light-installation",
           "marine-maintenance-works",
-          "general-contracting-services",
           "crane-lmi-calibration",
+          "general-contracting-services"
         ],
       },
     ],
