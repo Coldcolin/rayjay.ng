@@ -405,21 +405,26 @@ function SiteHeader({
         </div>
       </div>
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
+        <button
+          type="button"
+          onClick={() => onNavigate?.("/")}
+          className="group flex min-w-0 flex-1 cursor-pointer items-center gap-3 text-left transition-colors hover:text-sea-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sea-500"
+          aria-label="Back to home"
+        >
           <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl sm:size-28">
             <img
               src="/rayjay.png"
-              alt="Rayjay Multinational Company Limited logo"
+              alt=""
               className="h-full w-full object-contain shadow-soft"
             />
           </div>
           <div className="min-w-0">
             <p className="font-display text-lg uppercase tracking-[0.2em]">Rayjay</p>
-            <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70">
+            <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70 group-hover:text-sea-600/80">
               Multinational Company Limited
             </p>
           </div>
-        </div>
+        </button>
         <nav className="hidden items-center gap-6 text-sm font-medium text-ink-800 lg:flex">
           {navLinks.map((link) => {
             if (link.id === "services") {

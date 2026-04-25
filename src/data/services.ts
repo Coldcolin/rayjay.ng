@@ -124,7 +124,7 @@ export const services: Service[] = [
     syllabus: "LEEA Syllabus",
     notes: ["Classroom theory combined with practical evaluations."],
     heroImage: {
-      src: "https://s.alicdn.com/@sc04/kf/Hc3e82c0921f140f49cd9285913d2f834S/Industrial-Warehouse-Electric-Double-Girder-Overhead-Hoist-European-Bridge-Crane-Traveling-Foundry-Casting-Overhead-Crane.jpg",
+      src: "https://cdn-ilegmlo.nitrocdn.com/jKUCQPCGfOBPFCLyXyPznNxoomvFJyxU/assets/images/optimized/rev-72316a6/i0.wp.com/denotechschools.co.za/wp-content/uploads/2025/05/8ac07d172da71238d9a273417b5da6ad.overhead-crane-operator-training.png",
       alt: "Overhead crane in an industrial facility",
     },
     icon: Factory,
@@ -286,7 +286,7 @@ export const services: Service[] = [
     assessmentMethod: "Written exam and practical inspection exercises.",
     syllabus: "LEEA Syllabus",
     heroImage: {
-      src: "https://ww2.eagle.org/content/eagle/en/Products-and-Services/vendor-certification/container-certification/offshore-containers/_jcr_content/root/container/centerpar/image.img.jpg/1647297732277.jpg",
+      src: "https://www.lrqa.com/cdn-cgi/image/width=1024,format=auto/globalassets/_shared-images/1920-x-0785-c02.01-header-imagevideo-header-image-desktop/inspection-services/is-offshore-container-guide-1920x785.jpg",
       alt: "Offshore containers on a dock",
     },
     icon: Ship,
@@ -716,7 +716,7 @@ export const services: Service[] = [
     assessmentMethod:
       "Maintenance completion records with verification against approved scope.",
     heroImage: {
-      src: "/MarineLog.png",
+      src: "https://camcode.com/wp-content/uploads/2022/11/Ship-Maintenance.jpg",
       alt: "Marine maintenance team working on deck equipment",
     },
     icon: Ship,
