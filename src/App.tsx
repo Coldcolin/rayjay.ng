@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   services,
   serviceCategories,
   resolveServicesBySlugs,
   type Service,
-} from "@/data/services"
-import { cn } from "@/lib/utils"
+  type ServiceCategoryGroup,
+  type ServiceSubcategory,
+} from "@/data/services";
+import { cn } from "@/lib/utils";
 import {
   Anchor,
   ArrowLeft,
@@ -14,6 +16,7 @@ import {
   BookCheck,
   CheckCircle2,
   ChevronDown,
+  ChevronRight,
   ClipboardCheck,
   Menu,
   X,
@@ -28,14 +31,14 @@ import {
   ShieldCheck,
   Truck,
   Users,
-} from "lucide-react"
+} from "lucide-react";
 import {
   useEffect,
   useMemo,
   useRef,
   useState,
   type MouseEvent as ReactMouseEvent,
-} from "react"
+} from "react";
 
 const coreValues = [
   {
@@ -68,7 +71,7 @@ const coreValues = [
     description:
       "We focus on quality control, assurance, and innovation to meet customer expectations.",
   },
-]
+];
 
 const excellence = [
   {
@@ -101,53 +104,40 @@ const excellence = [
       "We provide accommodation, transport, first-aid, and communication support on site.",
     icon: LifeBuoy,
   },
-]
-
-const stats = [
-  { label: "Indigenous Strength", value: "100% Local Content" },
-  { label: "CAC Registration", value: "RC 1621639" },
-  { label: "Quality System", value: "ISO 9001:2015 Aligned" },
-  { label: "Regional Reach", value: "West Africa Focus" },
-]
+];
 
 const projects = [
   {
-    title: "Offshore Lifting Inspection Program",
+    title: "Lifting Operations",
     category: "Marine & Oil",
-    image:
-      "/offLift.jpeg",
+    image: "/offLift.jpeg",
   },
   {
-    title: "Heavy Equipment Fleet Audit",
+    title: "Construction/Earth moving equipment inspection and supplies",
     category: "Construction",
-    image:
-      "/constructionequipment.webp",
+    image: "/constructionequipment.webp",
   },
   {
-    title: "Instrumentation Calibration Campaign",
+    title: "Crane LMI calibration",
     category: "Oil & Gas",
-    image:
-      "/InstruCal.png",
+    image: "/Calibration.jpeg",
   },
+  // {
+  //   title: "Marine Logistics Corridor",
+  //   category: "Logistics",
+  //   image: "/MarineLog.png",
+  // },
   {
-    title: "Marine Logistics Corridor",
-    category: "Logistics",
-    image:
-      "/MarineLog.png",
-  },
-  {
-    title: "Rope Access Maintenance",
+    title: "Maintenance activity using rope acces",
     category: "Industrial",
-    image:
-      "/RopeStuff.jpg",
+    image: "/RopeStuff.jpg",
   },
   {
     title: "Fabric Maintenance & Refurbishment",
     category: "Infrastructure",
-    image:
-      "/FabMent.jpeg",
+    image: "/offLift.jpeg",
   },
-]
+];
 
 const process = [
   {
@@ -174,31 +164,30 @@ const process = [
       "Audits, feedback, and QA/QC controls keep outcomes aligned with standards.",
     icon: BadgeCheck,
   },
-]
+];
 
 const navLinks = [
-  { id: "about", label: "About" },
+  { id: "home", label: "Home" },
+  { id: "about", label: "About Us" },
   { id: "services", label: "Services" },
   { id: "projects", label: "Projects" },
-  { id: "values", label: "Values" },
-  { id: "operations", label: "Operations" },
-  { id: "quality", label: "Quality" },
-]
+  { id: "contact", label: "Contact us" },
+];
 
-type NavigateFn = (path: string, sectionId?: string) => void
+type NavigateFn = (path: string, sectionId?: string) => void;
 
 const getServiceSlug = (pathname: string) => {
-  const marker = "/services"
-  const index = pathname.indexOf(marker)
+  const marker = "/services";
+  const index = pathname.indexOf(marker);
   if (index === -1) {
-    return null
+    return null;
   }
   const slug = pathname
     .slice(index + marker.length)
     .replace(/^\/+/, "")
-    .replace(/\/+$/, "")
-  return slug.length > 0 ? slug : null
-}
+    .replace(/\/+$/, "");
+  return slug.length > 0 ? slug : null;
+};
 
 function ServiceNavAccordion({
   expandedCategoryId,
@@ -207,17 +196,17 @@ function ServiceNavAccordion({
   theme,
   className,
 }: {
-  expandedCategoryId: string | null
-  onExpandedChange: (id: string | null) => void
-  onServiceClick: (slug: string) => void
-  theme: "light" | "dark"
-  className?: string
+  expandedCategoryId: string | null;
+  onExpandedChange: (id: string | null) => void;
+  onServiceClick: (slug: string) => void;
+  theme: "light" | "dark";
+  className?: string;
 }) {
-  const isDark = theme === "dark"
+  const isDark = theme === "dark";
   return (
     <div className={cn("space-y-0", className)}>
       {serviceCategories.map((category) => {
-        const isOpen = expandedCategoryId === category.id
+        const isOpen = expandedCategoryId === category.id;
         return (
           <div
             key={category.id}
@@ -235,9 +224,7 @@ function ServiceNavAccordion({
                   : "text-ink-900 hover:text-sea-600",
               )}
               aria-expanded={isOpen}
-              onClick={() =>
-                onExpandedChange(isOpen ? null : category.id)
-              }
+              onClick={() => onExpandedChange(isOpen ? null : category.id)}
             >
               <span className="min-w-0 uppercase tracking-[0.12em]">
                 {category.title}
@@ -300,133 +287,285 @@ function ServiceNavAccordion({
               </div>
             ) : null}
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
+}
+
+function DesktopServicesFlyout({
+  activeCategoryId,
+  activeSubcategoryId,
+  isDetail,
+  onActiveCategoryChange,
+  onActiveSubcategoryChange,
+  onCatalogClick,
+  onServiceClick,
+}: {
+  activeCategoryId: string | null;
+  activeSubcategoryId: string | null;
+  isDetail: boolean;
+  onActiveCategoryChange: (id: string) => void;
+  onActiveSubcategoryChange: (id: string) => void;
+  onCatalogClick: (event: ReactMouseEvent<HTMLAnchorElement>) => void;
+  onServiceClick: (slug: string) => void;
+}) {
+  const activeCategory =
+    serviceCategories.find((category) => category.id === activeCategoryId) ??
+    serviceCategories[0];
+  const activeSubcategory =
+    activeCategory.subcategories.find(
+      (sub) => sub.id === activeSubcategoryId,
+    ) ?? activeCategory.subcategories[0];
+
+  const activateCategory = (category: ServiceCategoryGroup) => {
+    onActiveCategoryChange(category.id);
+    onActiveSubcategoryChange(category.subcategories[0]?.id ?? "");
+  };
+
+  const activateSubcategory = (subcategory: ServiceSubcategory) => {
+    onActiveSubcategoryChange(subcategory.id);
+  };
+
+  return (
+    <div
+      id="services-mega-menu"
+      className="absolute left-1/2 top-full z-50 mt-5 flex max-h-[min(74vh,560px)] max-w-[calc(100vw-2rem)] -translate-x-1/2 items-start overflow-x-auto overflow-y-visible text-[15px] text-white shadow-2xl"
+      role="menu"
+    >
+      <div className="min-h-[21rem] w-72 shrink-0 bg-[#303030] px-0 py-5">
+        <ul className="space-y-1">
+          {serviceCategories.map((category) => {
+            const isActive = category.id === activeCategory.id;
+            return (
+              <li key={category.id}>
+                <button
+                  type="button"
+                  className={cn(
+                    "flex w-full items-center justify-between gap-5 px-7 py-2.5 text-left font-medium leading-snug text-white/85 outline-none transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:bg-white/[0.08] focus-visible:text-white",
+                    isActive && "bg-white/[0.08] text-white",
+                  )}
+                  aria-haspopup="true"
+                  aria-expanded={isActive}
+                  onMouseEnter={() => activateCategory(category)}
+                  onFocus={() => activateCategory(category)}
+                  onClick={() => activateCategory(category)}
+                >
+                  <span>{category.title}</span>
+                  <ChevronRight className="size-4 shrink-0 text-white/75" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="mt-4 border-t border-white/10 px-7 pt-4">
+          <a
+            href={isDetail ? "/#services" : "#services"}
+            className="text-sm font-medium text-white/70 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/40"
+            onClick={onCatalogClick}
+          >
+            Browse full services catalog
+          </a>
+        </div>
+      </div>
+
+      {activeCategory ? (
+        <div className="min-h-[21rem] w-80 shrink-0 bg-[#343434] px-0 py-5">
+          <p className="px-7 pb-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
+            {activeCategory.title}
+          </p>
+          <ul className="space-y-1">
+            {activeCategory.subcategories.map((subcategory) => {
+              const isActive = subcategory.id === activeSubcategory?.id;
+              return (
+                <li key={subcategory.id}>
+                  <button
+                    type="button"
+                    className={cn(
+                      "flex w-full items-center justify-between gap-5 px-7 py-2.5 text-left font-medium leading-snug text-white/85 outline-none transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:bg-white/[0.08] focus-visible:text-white",
+                      isActive && "bg-white/[0.08] text-white",
+                    )}
+                    aria-haspopup="true"
+                    aria-expanded={isActive}
+                    onMouseEnter={() => activateSubcategory(subcategory)}
+                    onFocus={() => activateSubcategory(subcategory)}
+                    onClick={() => activateSubcategory(subcategory)}
+                  >
+                    <span>{subcategory.title}</span>
+                    <ChevronRight className="size-4 shrink-0 text-white/75" />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
+
+      {activeSubcategory ? (
+        <div className="min-h-[21rem] w-80 shrink-0 bg-[#303030] px-0 py-5">
+          <p className="px-7 pb-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
+            {activeSubcategory.title}
+          </p>
+          <ul className="space-y-1">
+            {resolveServicesBySlugs(activeSubcategory.serviceSlugs).map(
+              (service) => (
+                <li key={service.slug}>
+                  <button
+                    type="button"
+                    className="w-full px-7 py-2.5 text-left font-medium leading-snug text-white/85 outline-none transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:bg-white/[0.08] focus-visible:text-white"
+                    onClick={() => onServiceClick(service.slug)}
+                    role="menuitem"
+                  >
+                    {service.title}
+                  </button>
+                </li>
+              ),
+            )}
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 function SiteHeader({
   isDetail = false,
   onNavigate,
 }: {
-  isDetail?: boolean
-  onNavigate?: NavigateFn
+  isDetail?: boolean;
+  onNavigate?: NavigateFn;
 }) {
-  const [servicesOpen, setServicesOpen] = useState(false)
-  const [mobileNavOpen, setMobileNavOpen] = useState(false)
-  const [dropdownExpandedCategoryId, setDropdownExpandedCategoryId] = useState<
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [desktopActiveCategoryId, setDesktopActiveCategoryId] = useState<
     string | null
-  >(null)
+  >(serviceCategories[0]?.id ?? null);
+  const [desktopActiveSubcategoryId, setDesktopActiveSubcategoryId] = useState<
+    string | null
+  >(serviceCategories[0]?.subcategories[0]?.id ?? null);
   const [drawerExpandedCategoryId, setDrawerExpandedCategoryId] = useState<
     string | null
-  >(null)
-  const servicesMenuRef = useRef<HTMLDivElement>(null)
+  >(null);
+  const servicesMenuRef = useRef<HTMLDivElement>(null);
 
   const closeMobileNav = () => {
-    setMobileNavOpen(false)
-    setDrawerExpandedCategoryId(null)
-  }
+    setMobileNavOpen(false);
+    setDrawerExpandedCategoryId(null);
+  };
 
   const handleNavLinkClick = (
     event: ReactMouseEvent<HTMLAnchorElement>,
     sectionId: string,
   ) => {
     if (isDetail && onNavigate) {
-      event.preventDefault()
-      onNavigate("/", sectionId)
+      event.preventDefault();
+      onNavigate("/", sectionId);
     }
-    closeMobileNav()
-  }
+    closeMobileNav();
+  };
 
   useEffect(() => {
     if (!servicesOpen) {
-      setDropdownExpandedCategoryId(null)
+      setDesktopActiveCategoryId(serviceCategories[0]?.id ?? null);
+      setDesktopActiveSubcategoryId(
+        serviceCategories[0]?.subcategories[0]?.id ?? null,
+      );
     }
-  }, [servicesOpen])
+  }, [servicesOpen]);
 
   useEffect(() => {
     if (!mobileNavOpen) {
-      return
+      return;
     }
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = ""
-    }
-  }, [mobileNavOpen])
+      document.body.style.overflow = "";
+    };
+  }, [mobileNavOpen]);
 
   useEffect(() => {
     if (!servicesOpen) {
-      return
+      return;
     }
     const handlePointerDown = (event: MouseEvent) => {
       if (
         servicesMenuRef.current &&
         !servicesMenuRef.current.contains(event.target as Node)
       ) {
-        setServicesOpen(false)
+        setServicesOpen(false);
       }
-    }
+    };
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setServicesOpen(false)
+        setServicesOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handlePointerDown)
-    window.addEventListener("keydown", handleKey)
+    };
+    document.addEventListener("mousedown", handlePointerDown);
+    window.addEventListener("keydown", handleKey);
     return () => {
-      document.removeEventListener("mousedown", handlePointerDown)
-      window.removeEventListener("keydown", handleKey)
-    }
-  }, [servicesOpen])
+      document.removeEventListener("mousedown", handlePointerDown);
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [servicesOpen]);
 
   useEffect(() => {
     if (!mobileNavOpen) {
-      return
+      return;
     }
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeMobileNav()
+        closeMobileNav();
       }
-    }
-    window.addEventListener("keydown", handleKey)
-    return () => window.removeEventListener("keydown", handleKey)
-  }, [mobileNavOpen])
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [mobileNavOpen]);
 
   return (
-    <header className="relative">
-      <div className="bg-ink-950 text-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70">
-          <span>rayjay mc ltd</span>
-          <span className="hidden sm:inline">
-            Marine • Oil & Gas • Construction • Exploration
-          </span>
-          <span className="hidden md:inline">Accountable. Trustworthy. Indigenous.</span>
-        </div>
-      </div>
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
+    <header className="relative z-50 bg-white shadow-[0_1px_0_rgba(12,17,22,0.08)]">
+      <div className="mx-auto flex min-h-24 max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
         <button
           type="button"
           onClick={() => onNavigate?.("/")}
           className="group flex min-w-0 flex-1 cursor-pointer items-center gap-3 text-left transition-colors hover:text-sea-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sea-500"
           aria-label="Back to home"
         >
-          <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl sm:size-28">
+          <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden sm:size-20">
             <img
               src="/rayjay.png"
               alt=""
-              className="h-full w-full object-contain shadow-soft"
+              className="h-full w-full object-contain"
             />
           </div>
           <div className="min-w-0">
-            <p className="font-display text-lg uppercase tracking-[0.2em]">Rayjay</p>
-            <p className="text-xs uppercase tracking-[0.3em] text-ink-800/70 group-hover:text-sea-600/80">
+            <p className="font-display text-base font-semibold uppercase tracking-[0.12em]">
+              Rayjay
+            </p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-ink-800/70 group-hover:text-sea-600/80">
               Multinational Company Limited
             </p>
           </div>
         </button>
-        <nav className="hidden items-center gap-6 text-sm font-medium text-ink-800 lg:flex">
+        <nav className="hidden items-center gap-10 text-[15px] font-bold text-ink-800 lg:flex">
           {navLinks.map((link) => {
+            if (link.id === "home") {
+              return (
+                <a
+                  key={link.id}
+                  href={isDetail ? "/" : "#home"}
+                  onClick={(event) => {
+                    if (!isDetail) {
+                      return;
+                    }
+                    event.preventDefault();
+                    onNavigate?.("/");
+                  }}
+                  className="text-sea-600 hover:text-sea-700"
+                >
+                  {link.label}
+                </a>
+              );
+            }
             if (link.id === "services") {
               return (
                 <div key={link.id} className="relative" ref={servicesMenuRef}>
@@ -436,6 +575,8 @@ function SiteHeader({
                     aria-haspopup="true"
                     aria-controls="services-mega-menu"
                     className="flex items-center gap-1 hover:text-sea-500"
+                    onMouseEnter={() => setServicesOpen(true)}
+                    onFocus={() => setServicesOpen(true)}
                     onClick={() => setServicesOpen((open) => !open)}
                   >
                     {link.label}
@@ -447,41 +588,27 @@ function SiteHeader({
                     />
                   </button>
                   {servicesOpen ? (
-                    <div
-                      id="services-mega-menu"
-                      className="absolute right-0 top-full z-50 mt-3 w-[min(calc(100vw-2rem),22rem)] rounded-2xl border border-ink-900/10 bg-white p-4 text-ink-950 shadow-xl"
-                      role="menu"
-                    >
-                      <div className="max-h-[min(70vh,520px)] overflow-y-auto pr-1">
-                        <ServiceNavAccordion
-                          expandedCategoryId={dropdownExpandedCategoryId}
-                          onExpandedChange={setDropdownExpandedCategoryId}
-                          onServiceClick={(slug) => {
-                            onNavigate?.(`/services/${slug}`)
-                            setServicesOpen(false)
-                          }}
-                          theme="light"
-                        />
-                      </div>
-                      <div className="mt-3 border-t border-ink-900/10 pt-3 text-center">
-                        <a
-                          href={isDetail ? "/#services" : "#services"}
-                          className="text-sm font-medium text-sea-600 hover:text-sea-700"
-                          onClick={(event) => {
-                            setServicesOpen(false)
-                            if (isDetail && onNavigate) {
-                              event.preventDefault()
-                              onNavigate("/", "services")
-                            }
-                          }}
-                        >
-                          Browse full services catalog
-                        </a>
-                      </div>
-                    </div>
+                    <DesktopServicesFlyout
+                      activeCategoryId={desktopActiveCategoryId}
+                      activeSubcategoryId={desktopActiveSubcategoryId}
+                      isDetail={isDetail}
+                      onActiveCategoryChange={setDesktopActiveCategoryId}
+                      onActiveSubcategoryChange={setDesktopActiveSubcategoryId}
+                      onCatalogClick={(event) => {
+                        setServicesOpen(false);
+                        if (isDetail && onNavigate) {
+                          event.preventDefault();
+                          onNavigate("/", "services");
+                        }
+                      }}
+                      onServiceClick={(slug) => {
+                        onNavigate?.(`/services/${slug}`);
+                        setServicesOpen(false);
+                      }}
+                    />
                   ) : null}
                 </div>
-              )
+              );
             }
             return (
               <a
@@ -489,16 +616,16 @@ function SiteHeader({
                 href={isDetail ? `/#${link.id}` : `#${link.id}`}
                 onClick={(event) => {
                   if (!isDetail || !onNavigate) {
-                    return
+                    return;
                   }
-                  event.preventDefault()
-                  onNavigate("/", link.id)
+                  event.preventDefault();
+                  onNavigate("/", link.id);
                 }}
                 className="hover:text-sea-500"
               >
                 {link.label}
               </a>
-            )
+            );
           })}
         </nav>
         <div className="flex shrink-0 items-center gap-2">
@@ -518,7 +645,7 @@ function SiteHeader({
           </Button>
           <Button
             asChild
-            className="hidden bg-sea-600 text-ember-400 shadow-soft hover:bg-sea-700 sm:inline-flex"
+            className="hidden bg-sea-600 text-white shadow-soft hover:bg-sea-700 sm:inline-flex"
           >
             <a href="mailto:info@rayjayng.com?subject=Quotation%20Request">
               Get a Quote
@@ -554,7 +681,10 @@ function SiteHeader({
               {navLinks.map((link) => {
                 if (link.id === "services") {
                   return (
-                    <div key={link.id} className="mb-4 border-b border-ink-900/10 pb-4">
+                    <div
+                      key={link.id}
+                      className="mb-4 border-b border-ink-900/10 pb-4"
+                    >
                       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-ink-800/60">
                         {link.label}
                       </p>
@@ -562,20 +692,22 @@ function SiteHeader({
                         expandedCategoryId={drawerExpandedCategoryId}
                         onExpandedChange={setDrawerExpandedCategoryId}
                         onServiceClick={(slug) => {
-                          onNavigate?.(`/services/${slug}`)
-                          closeMobileNav()
+                          onNavigate?.(`/services/${slug}`);
+                          closeMobileNav();
                         }}
                         theme="light"
                       />
                       <a
                         href={isDetail ? "/#services" : "#services"}
                         className="mt-3 block text-center text-sm font-medium text-sea-600"
-                        onClick={(event) => handleNavLinkClick(event, "services")}
+                        onClick={(event) =>
+                          handleNavLinkClick(event, "services")
+                        }
                       >
                         Full services catalog →
                       </a>
                     </div>
-                  )
+                  );
                 }
                 return (
                   <a
@@ -586,7 +718,7 @@ function SiteHeader({
                   >
                     {link.label}
                   </a>
-                )
+                );
               })}
               <Button
                 asChild
@@ -605,24 +737,24 @@ function SiteHeader({
         </div>
       ) : null}
     </header>
-  )
+  );
 }
 
 function ServiceCard({
   service,
   onNavigate,
 }: {
-  service: Service
-  onNavigate: NavigateFn
+  service: Service;
+  onNavigate: NavigateFn;
 }) {
-  const Icon = service.icon
+  const Icon = service.icon;
 
   return (
     <a
       href={`/services/${service.slug}`}
       onClick={(event) => {
-        event.preventDefault()
-        onNavigate(`/services/${service.slug}`)
+        event.preventDefault();
+        onNavigate(`/services/${service.slug}`);
       }}
       className="group relative flex h-full min-h-[240px] flex-col rounded-3xl border border-white/10 bg-white/5 p-6 text-left transition hover:-translate-y-1 hover:border-ember-400/70 hover:bg-white/10"
       aria-label={`View ${service.title} details`}
@@ -651,7 +783,7 @@ function ServiceCard({
         <ArrowUpRight className="size-4 text-ember-300" />
       </div>
     </a>
-  )
+  );
 }
 
 function ContactSection() {
@@ -728,7 +860,7 @@ function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function SiteFooter() {
@@ -739,10 +871,20 @@ function SiteFooter() {
           <Anchor className="size-4 text-ember-400" />
           <span>Rayjay Multinational Company Limited</span>
         </div>
-        <span>CAC RC 1621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span>CAC RC 1621639 • 100% Indigenous • ISO 9001:2015 Aligned</span>
+          <a
+            href="https://freebie.photography/industry/slides/construction_building.htm"
+            className="hover:text-sea-600"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Hero image: freebie.photography
+          </a>
+        </div>
       </div>
     </footer>
-  )
+  );
 }
 
 function ServiceDetailPage({
@@ -750,21 +892,21 @@ function ServiceDetailPage({
   allServices,
   onNavigate,
 }: {
-  service?: Service
-  allServices: Service[]
-  onNavigate: NavigateFn
+  service?: Service;
+  allServices: Service[];
+  onNavigate: NavigateFn;
 }) {
-  const [heroSrc, setHeroSrc] = useState(service?.heroImage.src ?? "")
+  const [heroSrc, setHeroSrc] = useState(service?.heroImage.src ?? "");
 
   useEffect(() => {
     if (service) {
-      setHeroSrc(service.heroImage.src)
+      setHeroSrc(service.heroImage.src);
     }
-  }, [service])
+  }, [service]);
 
   const heroFallback = service
     ? `https://placehold.co/1600x900?text=${encodeURIComponent(service.title)}`
-    : ""
+    : "";
 
   if (!service) {
     return (
@@ -803,12 +945,12 @@ function ServiceDetailPage({
         <ContactSection />
         <SiteFooter />
       </div>
-    )
+    );
   }
 
   const otherServices = allServices
     .filter((item) => item.slug !== service.slug)
-    .slice(0, 6)
+    .slice(0, 6);
 
   return (
     <div className="text-ink-950">
@@ -822,7 +964,7 @@ function ServiceDetailPage({
               className="h-full w-full object-cover"
               onError={() => {
                 if (heroSrc !== heroFallback) {
-                  setHeroSrc(heroFallback)
+                  setHeroSrc(heroFallback);
                 }
               }}
             />
@@ -941,7 +1083,7 @@ function ServiceDetailPage({
               >
                 <a
                   href={`mailto:info@rayjayng.com?subject=${encodeURIComponent(
-                    `${service.title} Service Inquiry`
+                    `${service.title} Service Inquiry`,
                   )}`}
                 >
                   Request Service
@@ -989,45 +1131,45 @@ function ServiceDetailPage({
       </main>
       <SiteFooter />
     </div>
-  )
+  );
 }
 
 export default function App() {
-  const [path, setPath] = useState(() => window.location.pathname)
+  const [path, setPath] = useState(() => window.location.pathname);
   const [homeExpandedCategoryId, setHomeExpandedCategoryId] = useState<
     string | null
-  >(null)
+  >(null);
 
   useEffect(() => {
     const handlePopState = () => {
-      setPath(window.location.pathname)
-    }
-    window.addEventListener("popstate", handlePopState)
-    return () => window.removeEventListener("popstate", handlePopState)
-  }, [])
+      setPath(window.location.pathname);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   const navigate: NavigateFn = (to, sectionId) => {
-    window.history.pushState({}, "", to)
-    setPath(to)
+    window.history.pushState({}, "", to);
+    setPath(to);
     if (sectionId) {
       setTimeout(() => {
-        const target = document.getElementById(sectionId)
+        const target = document.getElementById(sectionId);
         if (target) {
-          target.scrollIntoView({ behavior: "smooth" })
+          target.scrollIntoView({ behavior: "smooth" });
         }
-      }, 80)
-      return
+      }, 80);
+      return;
     }
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  const serviceSlug = useMemo(() => getServiceSlug(path), [path])
+  const serviceSlug = useMemo(() => getServiceSlug(path), [path]);
   const activeService = useMemo(() => {
     if (!serviceSlug) {
-      return undefined
+      return undefined;
     }
-    return services.find((service) => service.slug === serviceSlug)
-  }, [serviceSlug, services])
+    return services.find((service) => service.slug === serviceSlug);
+  }, [serviceSlug, services]);
 
   if (serviceSlug) {
     return (
@@ -1036,7 +1178,7 @@ export default function App() {
         allServices={services}
         onNavigate={navigate}
       />
-    )
+    );
   }
 
   return (
@@ -1044,103 +1186,69 @@ export default function App() {
       <SiteHeader isDetail={false} onNavigate={navigate} />
 
       <main>
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid opacity-20" />
-          <div className="absolute -right-24 top-24 size-72 rounded-full bg-ember-200/60 blur-3xl" />
-          <div className="absolute -left-20 bottom-10 size-60 rounded-full bg-sea-200/60 blur-3xl" />
-          <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
-            <div className="relative z-10 space-y-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-ember-200 bg-ember-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ember-700">
-                <Anchor className="size-4" />
-                West Africa Operations
-              </div>
+        <section
+          id="home"
+          className="relative isolate min-h-[620px] overflow-hidden bg-ink-950 text-white md:min-h-[680px]"
+        >
+          <img
+            src="/heroImage.jpeg"
+            alt="Crane lifting a heavy steel load at an industrial construction site"
+            className="absolute inset-0 h-full w-full object-cover object-[70%_38%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink-950/95 via-ink-950/62 to-ink-950/12" />
+          <div className="absolute inset-0 bg-ink-950/20" />
+          <div className="relative z-10 mx-auto flex min-h-[620px] max-w-6xl items-center px-6 py-20 md:min-h-[680px]">
+            <div className="max-w-3xl space-y-7">
               <h1
-                className="text-balance font-display text-4xl font-semibold uppercase tracking-[0.06em] text-ink-950 opacity-0 animate-reveal lg:text-6xl"
+                className="text-balance font-display text-4xl font-extrabold leading-[1.08] tracking-normal text-white opacity-0 drop-shadow-xl animate-reveal sm:text-5xl lg:text-7xl"
                 style={{ animationDelay: "0.05s" }}
               >
-                Reliable Marine, Oil &amp; Gas, Construction &amp; Exploration
-                Services Built on Accountability.
+                Reliable Marine, Oil & Gas, Construction & Exploration Services
+                Built on Accountability.
               </h1>
               <p
-                className="max-w-xl text-lg text-ink-800 opacity-0 animate-reveal"
+                className="max-w-2xl text-lg font-medium leading-8 text-white/90 opacity-0 drop-shadow animate-reveal sm:text-xl"
                 style={{ animationDelay: "0.15s" }}
               >
                 Rayjay Multinational Company Limited was born out of the demand
-                for a quality alternative in specialty service delivery. We are a
-                100% indigenous company facilitating local content while solving
-                demanding challenges across critical sectors.
+                for a quality alternative in specialty service delivery. We are
+                a 100% indigenous company facilitating local content while
+                solving demanding challenges across critical sectors.
               </p>
               <div
                 className="flex flex-wrap items-center gap-4 opacity-0 animate-reveal"
                 style={{ animationDelay: "0.25s" }}
               >
-                <Button asChild className="bg-sea-600 text-ember-400 hover:bg-sea-700">
-                  <a href="mailto:info@rayjayng.com?subject=Consultation%20Request">
-                    Request a Consultation
-                    <ArrowUpRight className="ml-2 size-4" />
-                  </a>
-                </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="border-ink-900/20 text-ink-900 hover:border-ember-400 hover:text-ink-950"
+                  className="h-12 rounded-md border-2 border-white bg-transparent px-8 text-base font-bold text-white shadow-none hover:border-white hover:bg-white hover:text-ink-950"
                 >
-                  <a href="#services">View Services</a>
+                  <a href="#about">Read More</a>
                 </Button>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {stats.map((stat, index) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-2xl border border-white/50 bg-white/80 p-4 shadow-soft opacity-0 animate-reveal"
-                    style={{ animationDelay: `${0.35 + index * 0.08}s` }}
-                  >
-                    <p className="text-xs uppercase tracking-[0.3em] text-ink-800/60">
-                      {stat.label}
-                    </p>
-                    <p className="mt-2 text-lg font-semibold text-ink-950">
-                      {stat.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative z-10">
-              <div className="absolute -top-6 right-8 z-20 flex items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 text-sm shadow-soft">
-                <ShieldCheck className="size-5 text-ember-600" />
-                ISO 9001:2015 Requirements Aligned
-              </div>
-              <div className="relative z-0 overflow-hidden rounded-[32px] border border-white/70 bg-white/80 shadow-lift animate-floaty">
-                <img
-                  src="/hero.png"
-                  alt="Industrial operations"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="group absolute -bottom-10 left-6 overflow-hidden rounded-2xl border border-white/90 bg-white/95 shadow-lift backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-sea-200/70">
-                <div className="absolute -right-6 -top-6 size-20 rounded-full bg-gradient-to-br from-sea-500/10 to-ember-500/5" />
-                <div className="relative flex items-start gap-4 p-5">
-                  <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sea-500/20 to-sea-600/10 text-sea-600 ring-1 ring-sea-500/15">
-                    <BadgeCheck className="size-7" strokeWidth={2.5} />
-                  </div>
-                  <div className="min-w-0 pt-0.5">
-                    <p className="font-mono text-2xl font-bold tracking-tight text-ink-950">
-                      RC 1621639
-                    </p>
-                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-sea-600">
-                      CAC Verified · Nigeria
-                    </p>
-                    <p className="mt-2.5 text-xs leading-relaxed text-ink-600/70">
-                      Corporate Affairs Commission
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="about" className="mx-auto max-w-6xl px-6 py-16">
+        <section
+          id="about"
+          className="bg-ink-950 px-6 py-16 text-center text-white"
+        >
+          <div className="mx-auto max-w-6xl">
+            <h2 className="font-display text-4xl font-extrabold uppercase tracking-[0.04em] sm:text-5xl">
+              Welcome To Rayjay
+            </h2>
+            <p className="mx-auto mt-6 max-w-5xl text-base leading-8 text-white/82 sm:text-lg">
+              We service a wide range of markets including oil and gas, marine,
+              construction, and exploration. Through our multi-skilled
+              workforce, we offer effective, integrated solutions to complex
+              asset integrity and operational challenges.
+            </p>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-6">
               <p className="text-xs uppercase tracking-[0.4em] text-ink-800/60">
@@ -1204,7 +1312,8 @@ export default function App() {
                   Services
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-white">
-                  Training, inspection, supplies, and special services—organized by category.
+                  Training, inspection, supplies, and special services—organized
+                  by category.
                 </h2>
               </div>
               <div className="flex items-center gap-3 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ember-200">
@@ -1214,7 +1323,7 @@ export default function App() {
             </div>
             <div className="mt-10 space-y-3">
               {serviceCategories.map((category) => {
-                const isOpen = homeExpandedCategoryId === category.id
+                const isOpen = homeExpandedCategoryId === category.id;
                 return (
                   <div
                     key={category.id}
@@ -1268,7 +1377,7 @@ export default function App() {
                       </div>
                     ) : null}
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -1281,7 +1390,8 @@ export default function App() {
                 Projects
               </p>
               <h2 className="mt-4 text-3xl font-semibold uppercase tracking-[0.08em] text-ink-950">
-                Recent operations across marine, construction, and industrial assets.
+                Recent operations across marine, construction, and industrial
+                assets.
               </h2>
             </div>
             {/* <Button
@@ -1375,7 +1485,7 @@ export default function App() {
                 </p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {process.map((step) => {
-                    const Icon = step.icon
+                    const Icon = step.icon;
                     return (
                       <div
                         key={step.title}
@@ -1393,13 +1503,13 @@ export default function App() {
                           {step.description}
                         </p>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
               <div className="space-y-5">
                 {excellence.map((item) => {
-                  const Icon = item.icon
+                  const Icon = item.icon;
                   return (
                     <div
                       key={item.title}
@@ -1417,7 +1527,7 @@ export default function App() {
                         {item.description}
                       </p>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -1456,7 +1566,9 @@ export default function App() {
               <div className="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-6">
                 <div className="flex items-center gap-3">
                   <ShieldCheck className="size-6 text-ember-300" />
-                  <h3 className="text-xl font-semibold">Workplace Violence Policy</h3>
+                  <h3 className="text-xl font-semibold">
+                    Workplace Violence Policy
+                  </h3>
                 </div>
                 <p className="text-sm leading-relaxed text-white/70">
                   Rayjay Multinational Company Limited is committed to a work
@@ -1467,11 +1579,15 @@ export default function App() {
                 <div className="space-y-3 text-sm text-white/70">
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="mt-1 size-4 text-ember-300" />
-                    <span>Immediate response to Q/HSE reports and risk mitigations</span>
+                    <span>
+                      Immediate response to Q/HSE reports and risk mitigations
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="mt-1 size-4 text-ember-300" />
-                    <span>Clear accountability and single point of responsibility</span>
+                    <span>
+                      Clear accountability and single point of responsibility
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1484,5 +1600,5 @@ export default function App() {
 
       <SiteFooter />
     </div>
-  )
+  );
 }

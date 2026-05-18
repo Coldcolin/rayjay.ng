@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react"
+import type { LucideIcon } from "lucide-react";
 import {
   Boxes,
   ClipboardCheck,
@@ -15,41 +15,41 @@ import {
   Users,
   Wrench,
   Zap,
-} from "lucide-react"
+} from "lucide-react";
 
 type HeroImage = {
-  src: string
-  alt: string
-}
+  src: string;
+  alt: string;
+};
 
 export type Service = {
-  title: string
-  slug: string
-  summary: string
-  description: string
-  duration: string
-  entryRequirements: string
-  courseContent: string[]
-  assessmentMethod: string
-  syllabus?: string
-  notes?: string[]
-  heroImage: HeroImage
-  icon: LucideIcon
-}
+  title: string;
+  slug: string;
+  summary: string;
+  description: string;
+  duration: string;
+  entryRequirements: string;
+  courseContent: string[];
+  assessmentMethod: string;
+  syllabus?: string;
+  notes?: string[];
+  heroImage: HeroImage;
+  icon: LucideIcon;
+};
 
 export type ServiceSubcategory = {
-  id: string
-  title: string
+  id: string;
+  title: string;
   /** Service slugs in display order */
-  serviceSlugs: string[]
-}
+  serviceSlugs: string[];
+};
 
 export type ServiceCategoryGroup = {
-  id: string
-  title: string
-  description: string
-  subcategories: ServiceSubcategory[]
-}
+  id: string;
+  title: string;
+  description: string;
+  subcategories: ServiceSubcategory[];
+};
 
 export const services: Service[] = [
   {
@@ -70,9 +70,11 @@ export const services: Service[] = [
     ],
     assessmentMethod: "Written exam and practical observation.",
     syllabus: "LEEA Syllabus",
-    notes: ["Theory sessions supported by hands-on rigging and lifting practice."],
+    notes: [
+      "Theory sessions supported by hands-on rigging and lifting practice.",
+    ],
     heroImage: {
-      src: "https://www.altrad.com/files/medias/services/4-Mechanical/Lifting%20and%20rigging.jpg",
+      src: "/rigging-and-lifting.jpeg",
       alt: "Rigging equipment and lifting slings",
     },
     icon: HardHat,
@@ -99,7 +101,7 @@ export const services: Service[] = [
       "Hands-on training with supervised crane operation, precision lifting, and manoeuvring in varied site conditions.",
     ],
     heroImage: {
-      src: "/HeavyLifting.png",
+      src: "/craneOperation.jpeg",
       alt: "Crane lifting heavy equipment on site",
     },
     icon: Truck,
@@ -149,7 +151,7 @@ export const services: Service[] = [
     syllabus: "LEEA Syllabus",
     notes: ["Classroom instruction and supervised practical exercises."],
     heroImage: {
-      src: "https://clydetrainingsolutions.com/wp-content/uploads/2024/02/OPITO-Banksman-Slinger.webp",
+      src: "/banksman-sling.jpeg",
       alt: "Signaler guiding a crane lift",
     },
     icon: Users,
@@ -162,7 +164,8 @@ export const services: Service[] = [
     description:
       "Comprehensive program qualifying individuals to plan, manage, and supervise lifting operations.",
     duration: "5 days (4 training + 1 assessment)",
-    entryRequirements: "Recommended supervisory experience and mathematics skills.",
+    entryRequirements:
+      "Recommended supervisory experience and mathematics skills.",
     courseContent: [
       "Legislation",
       "Roles and responsibilities",
@@ -373,7 +376,11 @@ export const services: Service[] = [
       "Training for personnel performing manual handling tasks. Can be customized for site-specific requirements.",
     duration: "1 day",
     entryRequirements: "None",
-    courseContent: ["Safe lifting techniques", "Hazard awareness", "Ergonomics"],
+    courseContent: [
+      "Safe lifting techniques",
+      "Hazard awareness",
+      "Ergonomics",
+    ],
     assessmentMethod: "Written and practical assessment.",
     notes: ["Can be customized for site-specific requirements."],
     heroImage: {
@@ -472,9 +479,7 @@ export const services: Service[] = [
     ],
     assessmentMethod:
       "Certified inspection report with defect classification and certificate issuance.",
-    notes: [
-      "Applies to cranes, forklifts, hoists, and lifting accessories.",
-    ],
+    notes: ["Applies to cranes, forklifts, hoists, and lifting accessories."],
     heroImage: {
       src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgBbDbhEN2zWe2vCN3LLtMEyOUtkXY3vs7dQ&s",
       alt: "Inspection team assessing lifting equipment",
@@ -865,7 +870,7 @@ export const services: Service[] = [
     },
     icon: ShieldCheck,
   },
-]
+];
 
 export const serviceCategories: ServiceCategoryGroup[] = [
   {
@@ -959,19 +964,19 @@ export const serviceCategories: ServiceCategoryGroup[] = [
           "street-solar-light-installation",
           "marine-maintenance-works",
           "crane-lmi-calibration",
-          "general-contracting-services"
+          "general-contracting-services",
         ],
       },
     ],
   },
-]
+];
 
 export function getServiceBySlug(slug: string): Service | undefined {
-  return services.find((s) => s.slug === slug)
+  return services.find((s) => s.slug === slug);
 }
 
 export function resolveServicesBySlugs(slugs: string[]): Service[] {
   return slugs
     .map((slug) => getServiceBySlug(slug))
-    .filter((s): s is Service => Boolean(s))
+    .filter((s): s is Service => Boolean(s));
 }
