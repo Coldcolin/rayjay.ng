@@ -34,6 +34,7 @@ export type Service = {
   syllabus?: string;
   notes?: string[];
   heroImage: HeroImage;
+  galleryImages?: HeroImage[];
   icon: LucideIcon;
 };
 
@@ -69,7 +70,7 @@ export const services: Service[] = [
       "Proper signaling",
     ],
     assessmentMethod: "Written exam and practical observation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     notes: [
       "Theory sessions supported by hands-on rigging and lifting practice.",
     ],
@@ -123,7 +124,7 @@ export const services: Service[] = [
       "Safe lifting operations",
     ],
     assessmentMethod: "Written exam and practical observation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     notes: ["Classroom theory combined with practical evaluations."],
     heroImage: {
       src: "https://cdn-ilegmlo.nitrocdn.com/jKUCQPCGfOBPFCLyXyPznNxoomvFJyxU/assets/images/optimized/rev-72316a6/i0.wp.com/denotechschools.co.za/wp-content/uploads/2025/05/8ac07d172da71238d9a273417b5da6ad.overhead-crane-operator-training.png",
@@ -148,7 +149,7 @@ export const services: Service[] = [
       "Safe load handling",
     ],
     assessmentMethod: "Written exam (closed book) and practical observation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     notes: ["Classroom instruction and supervised practical exercises."],
     heroImage: {
       src: "/banksman-sling.jpeg",
@@ -176,7 +177,7 @@ export const services: Service[] = [
       "Live lifting operation",
     ],
     assessmentMethod: "Written exam and practical observation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://ges-org.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-01-19-at-19.43.26.jpg",
       alt: "Team planning a lifting operation",
@@ -198,7 +199,7 @@ export const services: Service[] = [
       "Maintenance practices",
     ],
     assessmentMethod: "Written test and practical observation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     notes: ["Classroom instruction and practical loft management exercises."],
     heroImage: {
       src: "https://primeliftsafetyng.com/wp-content/uploads/2020/09/Rigging-Loft-Management-Training.jpg",
@@ -220,7 +221,7 @@ export const services: Service[] = [
       "Safe lifting operations",
     ],
     assessmentMethod: "Written exam and practical lifting plan exercise.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://d9z1tpn605xsl.cloudfront.net/uploads/ckeditor/pictures/4702/content_blog-img.jpg",
       alt: "Mobile crane on a construction site",
@@ -241,7 +242,7 @@ export const services: Service[] = [
       "Non-fixed load attachments (plate clamps, lifting beams, magnets, etc.)",
     ],
     assessmentMethod: "Written exam and practical inspection exercises.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://www.petrobasegroup.com/public/images/services/lifting-gear-inspection.jpg",
       alt: "Close-up of lifting accessories",
@@ -263,7 +264,7 @@ export const services: Service[] = [
       "Safety standards",
     ],
     assessmentMethod: "Written exam and practical inspection evaluation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://cdn.cpdonline.co.uk/wp-content/uploads/2025/01/29134415/Equipment-Aids-for-Manual-Handling-scaled.jpg",
       alt: "Manual hoist equipment in use",
@@ -287,7 +288,7 @@ export const services: Service[] = [
       "Documentation",
     ],
     assessmentMethod: "Written exam and practical inspection exercises.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://www.lrqa.com/cdn-cgi/image/width=1024,format=auto/globalassets/_shared-images/1920-x-0785-c02.01-header-imagevideo-header-image-desktop/inspection-services/is-offshore-container-guide-1920x785.jpg",
       alt: "Offshore containers on a dock",
@@ -310,7 +311,7 @@ export const services: Service[] = [
       "Electrical fault identification",
     ],
     assessmentMethod: "Written exam and practical inspection evaluation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://primeliftsafetyng.com/oil-and-gas-training-services/lifting-operations-planning-and-supervision-pic-2/",
       alt: "Powered lifting machine in an industrial setting",
@@ -333,7 +334,7 @@ export const services: Service[] = [
       "Inspection procedures",
     ],
     assessmentMethod: "Written exam and practical observation.",
-    syllabus: "LEEA Syllabus",
+    // syllabus: "LEEA Syllabus",
     heroImage: {
       src: "https://cdn.prod.website-files.com/681c87ee5d6228a6104ef53d/6878cb78117d8e2326ea0d21_IMG_20210531_142431-7.jpg",
       alt: "Offshore crane on an oil platform",
@@ -870,6 +871,94 @@ export const services: Service[] = [
     },
     icon: ShieldCheck,
   },
+  {
+    title: "Pipeline Construction",
+    slug: "pipeline-construction",
+    summary:
+      "End-to-end pipeline construction including trenching, laying, jointing, and commissioning for oil, gas, and utility networks.",
+    description:
+      "We deliver pipeline construction scopes from trench preparation and pipe laying through jointing, tie-ins, testing, and quality close-out for onshore and offshore pipeline networks.",
+    duration: "Per project scope and schedule",
+    entryRequirements:
+      "Oil, gas, and utility operators requiring pipeline construction and installation support.",
+    courseContent: [
+      "Trenching and pipe laying",
+      "Jointing and tie-ins",
+      "Hydrotesting and commissioning support",
+      "HSE and quality close-out",
+    ],
+    assessmentMethod:
+      "Milestone-based quality reviews, weld and installation records, and contractual deliverable validation.",
+    heroImage: {
+      src: "/pipeline-construction-trench.png",
+      alt: "Pipeline laid in trench at construction site",
+    },
+    galleryImages: [
+      {
+        src: "/pipeline-construction-offshore.png",
+        alt: "Offshore pipeline structure work using rope access",
+      },
+    ],
+    icon: HardHat,
+  },
+  {
+    title: "Pipeline Inspection",
+    slug: "pipeline-inspection",
+    summary:
+      "Weld and pipeline integrity inspections using NDT methods including dye penetrant, magnetic particle, and ultrasonic techniques.",
+    description:
+      "We conduct pipeline inspections to verify weld quality, coating integrity, and structural fitness using field NDT methods with documented reporting for maintenance and compliance planning.",
+    duration: "Per project scope",
+    entryRequirements:
+      "Pipeline operators and construction teams requiring weld and integrity assurance during or after installation.",
+    courseContent: [
+      "Weld and joint NDT (DPT/MPI/UT as applicable)",
+      "Coating and integrity checks",
+      "Field documentation and reporting",
+      "Corrective-action recommendations",
+    ],
+    assessmentMethod:
+      "Technique-based inspection reports with findings, severity ratings, and recommendations.",
+    heroImage: {
+      src: "/pipeline-inspection-ndt-1.png",
+      alt: "Technician performing NDT on pipeline weld in trench",
+    },
+    galleryImages: [
+      {
+        src: "/pipeline-inspection-ndt-2.png",
+        alt: "NDT spray application on pipeline weld joint",
+      },
+      {
+        src: "/pipeline-inspection-ndt-3.png",
+        alt: "Field inspection of pipeline weld using NDT methods",
+      },
+    ],
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Fabrication",
+    slug: "fabrication-services",
+    summary:
+      "Field and shop fabrication of pipeline components, fittings, and structural assemblies including cutting, grinding, and welding.",
+    description:
+      "We execute fabrication scopes for pipeline components and assemblies, including cutting, grinding, weld preparation, and fit-up to support construction and maintenance projects.",
+    duration: "Per project scope",
+    entryRequirements:
+      "Construction and industrial projects requiring field or shop fabrication of pipeline components.",
+    courseContent: [
+      "Pipe cutting and preparation",
+      "Grinding and weld prep",
+      "Field fabrication of fittings and assemblies",
+      "Quality checks before installation",
+    ],
+    assessmentMethod:
+      "Fabrication quality verification, dimensional checks, and handover documentation.",
+    heroImage: {
+      src: "/fabrication-grinding.png",
+      alt: "Technician grinding pipeline during fabrication work",
+    },
+    icon: Factory,
+  },
 ];
 
 export const serviceCategories: ServiceCategoryGroup[] = [
@@ -951,9 +1040,9 @@ export const serviceCategories: ServiceCategoryGroup[] = [
   },
   {
     id: "special",
-    title: "Special services",
+    title: "Specialty services",
     description:
-      "Rope access, NDT, solar installation, offshore maintenance, contracting, and crane LMI calibration.",
+      "Rope access, NDT, pipeline construction and inspection, fabrication, solar installation, offshore maintenance, contracting, and crane LMI calibration.",
     subcategories: [
       {
         id: "special-main",
@@ -961,6 +1050,9 @@ export const serviceCategories: ServiceCategoryGroup[] = [
         serviceSlugs: [
           "rope-access-services",
           "non-destructive-testing-services",
+          "pipeline-construction",
+          "pipeline-inspection",
+          "fabrication-services",
           "street-solar-light-installation",
           "marine-maintenance-works",
           "crane-lmi-calibration",
