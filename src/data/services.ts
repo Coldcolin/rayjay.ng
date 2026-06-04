@@ -80,33 +80,33 @@ export const services: Service[] = [
     },
     icon: HardHat,
   },
-  {
-    title: "Crane Operator Training",
-    slug: "crane-operator-training",
-    summary:
-      "Program to ensure safe and efficient operation of heavy lifting machinery across construction, shipping, manufacturing, and oil & gas sectors.",
-    description:
-      "This program ensures safe and efficient operation of heavy lifting machinery across construction, shipping, manufacturing, and oil & gas sectors.",
-    duration: "Custom schedule",
-    entryRequirements:
-      "Personnel responsible for operating cranes in industrial environments.",
-    courseContent: [
-      "Crane mechanics and load calculations",
-      "Load chart interpretation",
-      "Rigging principles",
-      "Safety regulations and compliance",
-    ],
-    assessmentMethod: "Assessment method tailored to client requirements.",
-    notes: [
-      "Classroom instruction covering crane systems and safety standards.",
-      "Hands-on training with supervised crane operation, precision lifting, and manoeuvring in varied site conditions.",
-    ],
-    heroImage: {
-      src: "/craneOperation.jpeg",
-      alt: "Crane lifting heavy equipment on site",
-    },
-    icon: Truck,
-  },
+  // {
+  //   title: "Crane Operator Training",
+  //   slug: "crane-operator-training",
+  //   summary:
+  //     "Program to ensure safe and efficient operation of heavy lifting machinery across construction, shipping, manufacturing, and oil & gas sectors.",
+  //   description:
+  //     "This program ensures safe and efficient operation of heavy lifting machinery across construction, shipping, manufacturing, and oil & gas sectors.",
+  //   duration: "Custom schedule",
+  //   entryRequirements:
+  //     "Personnel responsible for operating cranes in industrial environments.",
+  //   courseContent: [
+  //     "Crane mechanics and load calculations",
+  //     "Load chart interpretation",
+  //     "Rigging principles",
+  //     "Safety regulations and compliance",
+  //   ],
+  //   assessmentMethod: "Assessment method tailored to client requirements.",
+  //   notes: [
+  //     "Classroom instruction covering crane systems and safety standards.",
+  //     "Hands-on training with supervised crane operation, precision lifting, and manoeuvring in varied site conditions.",
+  //   ],
+  //   heroImage: {
+  //     src: "/craneOperation.jpeg",
+  //     alt: "Crane lifting heavy equipment on site",
+  //   },
+  //   icon: Truck,
+  // },
   {
     title: "Overhead Crane Operator Training",
     slug: "electric-overhead-travelling-crane",
