@@ -108,7 +108,7 @@ export const services: Service[] = [
   //   icon: Truck,
   // },
   {
-    title: "Overhead Crane Operator Training",
+    title: "Overhead Crane Operator",
     slug: "electric-overhead-travelling-crane",
     summary:
       "Knowledge and skills to safely operate bridge, gantry, and monorail cranes with a focus on compliance, inspections, and load handling.",
@@ -133,7 +133,7 @@ export const services: Service[] = [
     icon: Factory,
   },
   {
-    title: "Banksman / Slinging Training Course",
+    title: "Banksman / Slinging",
     slug: "banksman-slinging-training",
     summary:
       "Prepares personnel to safely secure loads and direct crane movements in construction and oil & gas environments.",
@@ -185,7 +185,7 @@ export const services: Service[] = [
     icon: ShieldCheck,
   },
   {
-    title: "Rigging Loft Management Training",
+    title: "Rigging Loft Management",
     slug: "rigging-loft-management-equipment-inspection",
     summary:
       "Prepares personnel to control, inspect, and maintain lifting equipment such as slings, shackles, and hoists in offshore or construction environments.",
@@ -229,7 +229,7 @@ export const services: Service[] = [
     icon: Truck,
   },
   {
-    title: "Lifting Accessories Inspection Training",
+    title: "Lifting Accessories Inspection",
     slug: "lifting-accessories-inspection",
     summary:
       "Qualification for inspecting and maintaining slings, shackles, hooks, chains, and accessories.",
@@ -250,7 +250,7 @@ export const services: Service[] = [
     icon: Wrench,
   },
   {
-    title: "Manual Lifting Machines Training",
+    title: "Manual Lifting Machines",
     slug: "manual-lifting-machines",
     summary:
       "Qualification for inspecting and maintaining manual lifting machines like hoists and winches.",
@@ -272,7 +272,7 @@ export const services: Service[] = [
     icon: Gauge,
   },
   {
-    title: "Offshore Containers Certification Training",
+    title: "Offshore Containers Certification",
     slug: "offshore-containers-certification",
     summary:
       "Qualification for inspecting offshore containers and lifting sets.",
@@ -296,7 +296,7 @@ export const services: Service[] = [
     icon: Ship,
   },
   {
-    title: "Powered Lifting Machines Training",
+    title: "Powered Lifting Machines",
     slug: "powered-lifting-machines",
     summary:
       "Program for inspecting and maintaining powered lifting machines like electric hoists and cranes.",
@@ -342,7 +342,7 @@ export const services: Service[] = [
     icon: Radar,
   },
   {
-    title: "Forklift Operator Training",
+    title: "Forklift Operator",
     slug: "forklift-training",
     summary:
       "Mandatory safety training for personnel operating powered industrial trucks to prevent accidents such as tipovers and collisions.",
@@ -369,7 +369,7 @@ export const services: Service[] = [
     icon: Shovel,
   },
   {
-    title: "Manual Handling Training",
+    title: "Manual Handling",
     slug: "manual-handling-training",
     summary:
       "Training for personnel performing manual handling tasks, with optional site customization.",
@@ -413,7 +413,7 @@ export const services: Service[] = [
     icon: Compass,
   },
   {
-    title: "Scaffold Erection and Inspection Training",
+    title: "Scaffold Erection and Inspection",
     slug: "scaffold-erection-inspection-training",
     summary:
       "Covers scaffold safety requirements, components, erection, use, and dismantling of supported and suspended scaffolds.",
